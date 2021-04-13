@@ -20,10 +20,10 @@ import (
 )
 
 type adventurer struct {
-	name string
-	class string
-	race string
-	hp_max string
+  name string
+  class string
+  race string
+  hp_max string
   ac_armor_class string
   STR string
   DEX string
@@ -33,33 +33,33 @@ type adventurer struct {
   CHA string
   alignment string
   background string
-	item1 string // Usually the "main" weapon
-	item2 string
-	item3 string
-	item4 string
-	item5 string
-	item6 string
-	posx float64
-	posy float64
+  item1 string // Usually the "main" weapon
+  item2 string
+  item3 string
+  item4 string
+  item5 string
+  item6 string
+  posx float64
+  posy float64
 }
 
 type enemy struct {
-	name string
-	race string
-	hp_max string
+  name string
+  race string
+  hp_max string
   ac_armor_class string
   item1 string // Usually the enemy weapon
   item2 string
   item3 string
   item4 string
-	posx float64
-	posy float64
+  posx float64
+  posy float64
 }
 
 var (
-	background1Image *ebiten.Image
+  background1Image *ebiten.Image
   background2Image *ebiten.Image
-	SplashImage *ebiten.Image
+  SplashImage *ebiten.Image
   adventurer1Image *ebiten.Image
   adventurer2Image *ebiten.Image
   header1Image *ebiten.Image
@@ -112,13 +112,13 @@ func init() {
 	}
 
 	const dpi = 72
-	mplusTitleFont = truetype.NewFace(tt, &truetype.Options{Size:96,DPI:dpi,Hinting: font.HintingFull,})
-	mplusLargeFont = truetype.NewFace(tt, &truetype.Options{Size:72,DPI:dpi,Hinting: font.HintingFull,})
-	mplusNormalFont = truetype.NewFace(tt, &truetype.Options{Size:48,DPI:dpi,Hinting: font.HintingFull,})
-	mplusSmallFont = truetype.NewFace(tt, &truetype.Options{Size:24,DPI:dpi,Hinting: font.HintingFull,})
+  mplusTitleFont = truetype.NewFace(tt, &truetype.Options{Size:96,DPI:dpi,Hinting: font.HintingFull,})
+  mplusLargeFont = truetype.NewFace(tt, &truetype.Options{Size:72,DPI:dpi,Hinting: font.HintingFull,})
+  mplusNormalFont = truetype.NewFace(tt, &truetype.Options{Size:48,DPI:dpi,Hinting: font.HintingFull,})
+  mplusSmallFont = truetype.NewFace(tt, &truetype.Options{Size:24,DPI:dpi,Hinting: font.HintingFull,})
   mplusMiniFont = truetype.NewFace(tt, &truetype.Options{Size:14,DPI:dpi,Hinting: font.HintingFull,})
-	player[0] = adventurer{name: "Myu", class: "Level 1 Archer", race: "Elf", item1: "Elven Shortbow +1 (45m/1d6)", item2: "Elvish Dagger +1 (1d4)", item3: "Leather Armor (AC11)", item4: "Lembas (5)", item5: "Camping supplies", posx: 630, posy: 210, hp_max: "15 HP",STR: "STR 11", DEX: "DEX 14", CON: "CON 10", INT: "INT 13", WIS: "WIS 13", CHA: "CHA 8", alignment: "Chaotic good", ac_armor_class: "AC 11"}
-	player[1] = adventurer{name: "Dolph", class: "Level 1 Druid", race: "Elf", item1: "Shaman's magic staff +2", item2: "Rope", item3: "Healing Herbs", posx: 560, posy: 280, hp_max: "12 HP",STR: "STR 8", DEX: "DEX 10", CON: "CON 7", INT: "INT 15", WIS: "WIS 14", CHA: "CHA 12", alignment: "Lawful good", ac_armor_class: "AC 10"}
+  player[0] = adventurer{name: "Myu", class: "Level 1 Archer", race: "Elf", item1: "Elven Shortbow +1 (45m/1d6)", item2: "Elvish Dagger +1 (1d4)", item3: "Leather Armor (AC11)", item4: "Lembas (5)", item5: "Camping supplies", posx: 630, posy: 210, hp_max: "15 HP",STR: "STR 11", DEX: "DEX 14", CON: "CON 10", INT: "INT 13", WIS: "WIS 13", CHA: "CHA 8", alignment: "Chaotic good", ac_armor_class: "AC 11"}
+  player[1] = adventurer{name: "Dolph", class: "Level 1 Druid", race: "Elf", item1: "Shaman's magic staff +2", item2: "Rope", item3: "Healing Herbs", posx: 560, posy: 280, hp_max: "12 HP",STR: "STR 8", DEX: "DEX 10", CON: "CON 7", INT: "INT 15", WIS: "WIS 14", CHA: "CHA 12", alignment: "Lawful good", ac_armor_class: "AC 10"}
   npc[0] = enemy{name: "Ghaz", race: "Level 1 Goblin", posx: 1200, posy: 700, hp_max : "8 HP", ac_armor_class: "AC 5", item1: "Club (1d4)"}
   npc[1] = enemy{name: "Dhurg", race: "Level 2 Goblin Warg Rider", posx: 1100, posy: 750, hp_max: "10 HP", ac_armor_class: "AC 7", item1: "Hand-Axe (1d6)"}
   npc[2] = enemy{name: "Dorg", race: "Level 1 Skeleton Archer", posx: 1150, posy: 800, hp_max: "5 HP", ac_armor_class: "AC 6", item1: "Longbow (1d6)"}
@@ -222,21 +222,20 @@ func update(screen *ebiten.Image) error {
           text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].ac_armor_class), mplusSmallFont, 1540, 136, color.White)
           text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].alignment), mplusSmallFont, 1490, 168, color.White)
 
-          text.Draw(screen, "Min 3 // Max 18", mplusMiniFont, 1720, 50, color.White)
+          text.Draw(screen, "Range 3-18", mplusMiniFont, 1720, 50, color.White)
           text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].STR), mplusMiniFont, 1770, 70, color.White)
           text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].DEX), mplusMiniFont, 1770, 90, color.White)
           text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].CON), mplusMiniFont, 1770, 110, color.White)
           text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].INT), mplusMiniFont, 1770, 130, color.White)
           text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].WIS), mplusMiniFont, 1770, 150, color.White)
           text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].CHA), mplusMiniFont, 1770, 170, color.White)
-
-	       	text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].item1), mplusSmallFont, 1532, 270, color.White)
-	       	text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].item2), mplusSmallFont, 1532, 310, color.White)
-	       	text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].item3), mplusSmallFont, 1532, 350, color.White)
+          text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].item1), mplusSmallFont, 1532, 270, color.White)
+          text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].item2), mplusSmallFont, 1532, 310, color.White)
+          text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].item3), mplusSmallFont, 1532, 350, color.White)
           text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].item4), mplusSmallFont, 1532, 390, color.White)
           text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].item5), mplusSmallFont, 1532, 430, color.White)
           text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].item6), mplusSmallFont, 1532, 470, color.White)
-	        text.Draw(screen, "-- INVENTORY --", mplusNormalFont, 1500, 232, color.White)
+          text.Draw(screen, "-- INVENTORY --", mplusNormalFont, 1500, 232, color.White)
         }
 
           // SHow/hide enemy data
@@ -545,7 +544,7 @@ func update(screen *ebiten.Image) error {
        	go dice_sound()
         time.Sleep(100 * time.Millisecond)
        	s1 := rand.NewSource(time.Now().UnixNano())
-	      r1 := rand.New(s1)
+        r1 := rand.New(s1)
         time.Sleep(100 * time.Millisecond)
         s2 := rand.NewSource(time.Now().UnixNano())
         r2 := rand.New(s2)
@@ -556,7 +555,7 @@ func update(screen *ebiten.Image) error {
         s4 := rand.NewSource(time.Now().UnixNano())
         r4 := rand.New(s4)
         DICE_20_1 = r1.Intn(20) + 1
-	      DICE_20_2 = r2.Intn(20) + 1
+        DICE_20_2 = r2.Intn(20) + 1
         DICE_4_1 = r3.Intn(4) + 1
         DICE_6_1 = r4.Intn(6) + 1
 	   }
