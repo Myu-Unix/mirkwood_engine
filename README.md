@@ -1,4 +1,4 @@
-#### Mirkwood Engine
+# Mirkwood Engine 🧝
 
 A prototype of a virtual tabletop for D&D 5E written in Go and Ebiten.
 
