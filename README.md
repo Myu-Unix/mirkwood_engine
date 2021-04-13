@@ -2,7 +2,7 @@
 
 A prototype of a virtual tabletop for D&D 5E written in Go and Ebiten.
 
-[img](prototype.png)
+![img](prototype.png)
 
 #### Assets/Artwork used
 
