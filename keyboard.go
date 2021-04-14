@@ -121,6 +121,11 @@ func handle_keyboard() {
         } else {
             keyStates[ebiten.KeyL] = 0
         }
+        if ebiten.IsKeyPressed(ebiten.KeyMinus) {
+            keyStates[ebiten.KeyMinus]++
+        } else {
+            keyStates[ebiten.KeyMinus] = 0
+        }
       }
 
 func IsKeyTriggered(key ebiten.Key) bool {

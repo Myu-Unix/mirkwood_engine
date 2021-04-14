@@ -13,10 +13,6 @@ var err error
         if err != nil {
                 log.Fatal(err)
         }
-      background2Image, _, err = ebitenutil.NewImageFromFile("images/background2.png", ebiten.FilterNearest)
-        if err != nil {
-                log.Fatal(err)
-        }
       hideImage, _, err = ebitenutil.NewImageFromFile("images/hide.png", ebiten.FilterNearest)
         if err != nil {
                 log.Fatal(err)
@@ -78,6 +74,10 @@ var err error
                 log.Fatal(err)
         }
       dmImage, _, err = ebitenutil.NewImageFromFile("images/dm.png", ebiten.FilterNearest)
+        if err != nil {
+                log.Fatal(err)
+        }
+      notificationImage, _, err = ebitenutil.NewImageFromFile("images/notification.png", ebiten.FilterNearest)
         if err != nil {
                 log.Fatal(err)
         }

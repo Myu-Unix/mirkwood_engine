@@ -111,19 +111,37 @@ func state_handler() {
 
        if IsKeyTriggered(ebiten.KeyKP1) == true {
          npc[0].alive = 0
+         STATE_LINK=0
        }
        if IsKeyTriggered(ebiten.KeyKP2) == true {
          npc[1].alive = 0
+         STATE_LINK=0
        }
        if IsKeyTriggered(ebiten.KeyKP3) == true {
          npc[2].alive = 0
+         STATE_LINK=0
        }
        if IsKeyTriggered(ebiten.KeyKP4) == true {
          npc[3].alive = 0
+         STATE_LINK=0
+       }
+       // Remove health from enemies WIP
+       /*if IsKeyTriggered(ebiten.KeyMinus) == true {
+         npc[STATE_ENEMY_SELECTED].hp_max = strconv(npc[STATE_ENEMY_SELECTED].hp_max) -= 1
+       } */
+
+       if IsKeyTriggered(ebiten.KeyN) == true {
+        notification_posx = 1920 
+         go click_sound()
+         if STATE_ROUND < 2 {
+          STATE_ROUND +=1
+         } else {
+          STATE_ROUND = 0
+         }
        }
 
        // Next map
-       if IsKeyTriggered(ebiten.KeyN) == true {
+       /*if IsKeyTriggered(ebiten.KeyN) == true {
          go click_sound()
          header_posx = 0
          STATE_MAP=2
@@ -143,7 +161,7 @@ func state_handler() {
          npc[2].posy = 250
          npc[3].posx = 1580
          npc[3].posy = 340  
-       }
+       } */
 
        if IsKeyTriggered(ebiten.KeyR) == true { // roll dices
        	go dice_sound()
