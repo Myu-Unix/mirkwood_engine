@@ -2,7 +2,7 @@
 
 A prototype of a virtual tabletop written in Go and Ebiten.
 
-![img](prototype.png)
+![img](prototype.gif)
 
 #### Status
 
