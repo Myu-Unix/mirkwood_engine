@@ -4,10 +4,16 @@ A prototype of a virtual tabletop written in Go and Ebiten.
 
 ![img](prototype.png)
 
+#### Status
+
+Very much a prototype - PR welcomed ! :)
+
 #### Usage
 
-./build.sh
-./mirkwood_engine
+    ./build.sh
+    ./mirkwood_engine
+
+Press 'U' to get shortcuts info
 
 #### Platforms
 
