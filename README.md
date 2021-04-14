@@ -4,6 +4,8 @@ A prototype of a virtual tabletop written in Go and Ebiten.
 
 ![img](images/prototype.gif)
 
+(The gif can seems a bit laggy but the animations are of course smooth in reality.)
+
 #### Status/TODOs
 
 Very much a prototype - PR welcomed ! :)
