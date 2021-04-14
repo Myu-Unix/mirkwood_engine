@@ -15,16 +15,16 @@ Very much a prototype - PR welcomed ! :)
 - [ ] Investigate Ebiten v2
 - [ ] ...
 
-#### Usage
+#### Build
 
-    ./build.sh
-    ./mirkwood_engine
+    ./build.sh or ./build_windows.sh
+    ./mirkwood_engine or mirkwood_engine.exe
 
 Press 'U' to get shortcuts info
 
 #### Platforms
 
-Only tested on Linux for now.
+Tested on Linux and Windows (through Wine)
 
 #### Assets/Artwork used
 

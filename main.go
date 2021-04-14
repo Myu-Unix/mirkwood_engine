@@ -85,7 +85,7 @@ var (
   STATE_ENEMY_SELECTED=1
   STATE_HIDDEN=1
   STATE_SHOW_INVENTORY = 1
-  STATE_DM=1
+  STATE_DM=0
   STATE_SHOW_DEBUG = 0
   STATE_LINK=0
   STATE_SHOW_SPLASH = 1
@@ -94,9 +94,10 @@ var (
   mplusLargeFont font.Face
   mplusNormalFont font.Face
   mplusSmallFont font.Face
+  mplusNotificationFont font.Face
   mplusMiniFont font.Face
   cmd_run []byte
-  engine_version = "Mirkwood Engine 0.5.2 (Prototype)"
+  engine_version = "Mirkwood Engine 0.5.3 (Prototype)"
   engine_text = "Written in Go + Ebiten // Not all those who wander are lost"
   header_posx float64 = 0
   notification_posx float64 = 1920 
@@ -113,6 +114,7 @@ func init() {
   mplusLargeFont = truetype.NewFace(tt, &truetype.Options{Size:72,DPI:dpi,Hinting: font.HintingFull,})
   mplusNormalFont = truetype.NewFace(tt, &truetype.Options{Size:48,DPI:dpi,Hinting: font.HintingFull,})
   mplusSmallFont = truetype.NewFace(tt, &truetype.Options{Size:24,DPI:dpi,Hinting: font.HintingFull,})
+  mplusNotificationFont = truetype.NewFace(tt, &truetype.Options{Size:20,DPI:dpi,Hinting: font.HintingFull,})
   mplusMiniFont = truetype.NewFace(tt, &truetype.Options{Size:14,DPI:dpi,Hinting: font.HintingFull,})
   // TODO : Replace by json file config
   player[0] = adventurer{name: "Myu", class: "Level 1 Ranger", race: "Elf", item1: "Elven Shortbow +1 (45m/1d6)", item2: "Elvish Dagger +1 (1d4)", item3: "Leather Armor (AC11)", item4: "Lembas (5)", item5: "Camping supplies", posx: 630, posy: 210, hp_max: "15 HP",STR: "STR 12", DEX: "DEX 14", CON: "CON 13", INT: "INT 12", WIS: "WIS 13", CHA: "CHA 10", alignment: "Chaotic good", ac_armor_class: "AC 13"}
@@ -153,7 +155,7 @@ func update(screen *ebiten.Image) error {
         opDice6.GeoM.Translate(16,340)
         opDice8.GeoM.Translate(16,450)
         opHide.GeoM.Translate(1041,629)
-        opNotification.GeoM.Translate(notification_posx,32)
+        opNotification.GeoM.Translate(notification_posx,16)
 
         // Draw images
         if STATE_SHOW_SPLASH > 0 { // This shows the splashscreen
@@ -177,7 +179,7 @@ func update(screen *ebiten.Image) error {
                 ebitenutil.DrawLine(screen, player[STATE_PLAYER_SELECTED-1].posx+17, player[STATE_PLAYER_SELECTED-1].posy+33, npc[STATE_ENEMY_SELECTED-1].posx+17, npc[STATE_ENEMY_SELECTED-1].posy+33, color.RGBA{255, 128, 0, 255})
                 a := int(npc[STATE_ENEMY_SELECTED-1].posx) - int(player[STATE_PLAYER_SELECTED-1].posx)
                 b := int(npc[STATE_ENEMY_SELECTED-1].posy) - int(player[STATE_PLAYER_SELECTED-1].posy)
-                // Rough distance in ft from pixels
+                // Rough distance in "ft" from pixels
                 distance := math.Sqrt(float64((a*a)) + float64((b*b)))/10
                 text.Draw(screen, string(strconv.Itoa(int(distance))), mplusSmallFont, int(distance*5 + player[STATE_PLAYER_SELECTED-1].posx), int(distance*5 + player[STATE_PLAYER_SELECTED-1].posy), color.White)
                 text.Draw(screen, "ft", mplusSmallFont, int(distance*5 + player[STATE_PLAYER_SELECTED-1].posx +30), int(distance*5 + player[STATE_PLAYER_SELECTED-1].posy), color.White)
@@ -277,31 +279,34 @@ func update(screen *ebiten.Image) error {
 
          // Notification for round
          if STATE_ROUND == 0 {
-           text.Draw(screen, "DM Explains the setup", mplusSmallFont, 56, 72, color.White)
+           text.Draw(screen, "Setting the scene !", mplusNotificationFont, 64, 72, color.White)
+           text.Draw(screen, "DM explains the scene and/or what happens next.", mplusNotificationFont, 64, 94, color.White)
          } else if STATE_ROUND == 1 {
-           text.Draw(screen, "Movement - Up to your speed", mplusSmallFont, 56, 72, color.White)
+           text.Draw(screen, "Movement - Up to your speed", mplusNotificationFont, 64, 72, color.White)
+           text.Draw(screen, "Interaction - i.e opening a door, sheathing a weapon", mplusNotificationFont, 64, 94, color.White)
          } else if STATE_ROUND == 2 {
-           text.Draw(screen, "Action", mplusSmallFont, 56, 72, color.White)
+           text.Draw(screen, "Action - Attack, Dash, Improvise, Hide, Search, ...", mplusNotificationFont, 64, 72, color.White)
+           text.Draw(screen, "Combat resolution", mplusNotificationFont, 64, 94, color.White)
          }
 
          // DM cheat sheet
          if STATE_DM == 1 {
           screen.DrawImage(dmImage, opBackground)
-          text.Draw(screen, "SUPERSIMPLIFIED COMBAT RULES DYOR", mplusSmallFont, 32, 32, color.RGBA{255, 128, 0, 255})
+          text.Draw(screen, "--- SUPERSIMPLIFIED COMBAT RULES (WIP) ---", mplusSmallFont, 32, 32, color.RGBA{255, 128, 0, 255})
           text.Draw(screen, "Is anyone surprised ? If you surprise an enemy, you'll have an additional turn.", mplusSmallFont, 32, 82, color.White)
           text.Draw(screen, "Everyone rolls initiative (1d20 + initiative modifier) and the one with highest start first", mplusSmallFont, 32, 132, color.White)
           text.Draw(screen, "On your turn, you can move a distance up to your speed and take 1 action", mplusSmallFont, 32, 182, color.White)
           text.Draw(screen, "To attack, roll a d20 and add weapons modifiers and check that against AC value", mplusSmallFont, 32, 214, color.White)
           text.Draw(screen, "Then to it, roll the dice from you weapon (i.e 1d6)", mplusSmallFont, 32, 246, color.White)
-          text.Draw(screen, "SKILL CHECKS/SAVINGS THROWS (1d20)", mplusSmallFont, 32, 320, color.RGBA{255, 128, 0, 255})
+          text.Draw(screen, "--- SKILL CHECKS/SAVINGS THROWS (1d20) ---", mplusSmallFont, 32, 320, color.RGBA{255, 128, 0, 255})
           text.Draw(screen, "DM can ask for a skill check before a player can process with an action. This is resolved with a D20 roll +/- modifiers", mplusSmallFont, 32, 370, color.White)
           text.Draw(screen, "DM can ask for a saving throw based on abilities. Must resolve the difficulty (DC) set by the DM or else fail", mplusSmallFont, 32, 420, color.White)
           text.Draw(screen, "DC : 5 = very easy / 10 = Easy / 15 = Moderate / 20 = Hard / 25 = Very Hard", mplusSmallFont, 32, 470, color.White)
-          text.Draw(screen, "KEYBOARD SHORTCUTS", mplusSmallFont, 32, 520, color.RGBA{255, 128, 0, 255})
+          text.Draw(screen, "--- MIRKWOOD ENGINE KEYBOARD SHORTCUTS ---", mplusSmallFont, 32, 520, color.RGBA{255, 128, 0, 255})
           text.Draw(screen, "P to switch player - R to roll a dice - Z/S/Q/D to move player - K to quit - up/down/left/right to move ennemies - e to switch enemies", mplusSmallFont, 32, 570, color.White)
           text.Draw(screen, "K to quit - up/down/left/right to move ennemies - e to switch enemies - L to link", mplusSmallFont, 32, 620, color.White)
           text.Draw(screen, "I - Show inventory/character panel - U DM info - KP1/KP2/KP3/KP4 to 'kill' enemies 1/2/3/4 - N for next round - G debug info", mplusSmallFont, 32, 670, color.White)
-          text.Draw(screen, "PRESS 'U' to open/close this panel :)", mplusLargeFont, 500, 900, color.RGBA{255, 128, 0, 255})
+          text.Draw(screen, "PRESS 'U' to open/close this panel :)", mplusLargeFont, 500, 900, color.White)
          }
     	}
 
