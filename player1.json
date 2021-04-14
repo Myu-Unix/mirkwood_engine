@@ -1,0 +1,21 @@
+{
+"name": "Myu",
+"class": "Level 2 Ranger",
+"race": "Elf",
+"item1": "Elven Shortbow +1 (45m/1d6)",
+"item2": "Elvish Dagger +1 (1d4)",
+"item3": "Leather Armor (AC11)",
+"item4": "Lembas (5)",
+"item5": "Camping supplies",
+"posx": 630,
+"posy": 210,
+"hp_max": "15 HP",
+"STR": "STR 12",
+"DEX": "DEX 14",
+"CON": "CON 13",
+"INT": "INT 12",
+"WIS": "WIS 13",
+"CHA": "CHA 10",
+"alignment": "Chaotic good",
+"ac_armor_class": "AC 13"
+}
