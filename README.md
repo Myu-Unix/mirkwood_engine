@@ -1,8 +1,17 @@
 # Mirkwood Engine 🧝
 
-A prototype of a virtual tabletop for D&D 5E written in Go and Ebiten.
+A prototype of a virtual tabletop written in Go and Ebiten.
 
 ![img](prototype.png)
+
+#### Usage
+
+./build.sh
+./mirkwood_engine
+
+#### Platforms
+
+Only tested on Linux for now.
 
 #### Assets/Artwork used
 
@@ -12,6 +21,6 @@ Dice icons from the Noun Project
 
 Magic the Gathering Art for "player headers"
 
-Harabare Mais Demo font
+Harabara Mais Demo font
 
 Others arts I wish I could credit but don't have any reference.
