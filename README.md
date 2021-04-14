@@ -4,9 +4,16 @@ A prototype of a virtual tabletop written in Go and Ebiten.
 
 ![img](images/prototype.gif)
 
-#### Status
+#### Status/TODOs
 
 Very much a prototype - PR welcomed ! :)
+
+- [ ] Use a proper go library in sound.go
+- [ ] Use a json config file for players character sheet
+- [ ] Implement proper logic for combat - Requires proper knowledge of the tabletop game
+- [ ] Remove licensed assets if any
+- [ ] Investigate Ebiten v2
+- [ ] ...
 
 #### Usage
 

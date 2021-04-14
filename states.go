@@ -34,6 +34,7 @@ func state_handler() {
        if IsKeyTriggered(ebiten.KeyRight) == true {
         npc[STATE_ENEMY_SELECTED-1].posx = npc[STATE_ENEMY_SELECTED-1].posx + 70
    	   }
+
        if IsKeyTriggered(ebiten.KeyF) == true {
        	if STATE_FULLSCREEN == 0 {
          ebiten.SetFullscreen(true)
@@ -47,15 +48,15 @@ func state_handler() {
        	STATE_SHOW_SPLASH = 0
         header_posx = 0
        	go click_sound()
-       if STATE_PLAYER_SELECTED==1 {
-       	STATE_PLAYER_SELECTED=2
-       } else {
-       	STATE_PLAYER_SELECTED=1
-       }
+        if STATE_PLAYER_SELECTED < 2 {
+       	STATE_PLAYER_SELECTED += 1
+        } else {
+       	  STATE_PLAYER_SELECTED=1
+         }
        }
        if IsKeyTriggered(ebiten.KeyU) == true {
         go click_sound()
-       if STATE_DM==1 {
+       if STATE_DM == 1 {
         STATE_DM=0
        } else {
         STATE_DM=1
@@ -63,7 +64,7 @@ func state_handler() {
        }
        if IsKeyTriggered(ebiten.KeyL) == true {
          go click_sound()
-         if STATE_LINK==1 {
+         if STATE_LINK == 1 {
            STATE_LINK=0
          } else {
            STATE_LINK=1
@@ -71,19 +72,15 @@ func state_handler() {
        }
        if IsKeyTriggered(ebiten.KeyE) == true {
        	go click_sound()
-        if STATE_ENEMY_SELECTED==1 {
-       	  STATE_ENEMY_SELECTED=2
-        } else if STATE_ENEMY_SELECTED==2 {
-          STATE_ENEMY_SELECTED=3
-        } else if STATE_ENEMY_SELECTED==3 {
-          STATE_ENEMY_SELECTED=4
+        if STATE_ENEMY_SELECTED < 4 {
+       	  STATE_ENEMY_SELECTED += 1
         } else {
-       	  STATE_ENEMY_SELECTED=1
+       	  STATE_ENEMY_SELECTED = 1
         }
       }
        if IsKeyTriggered(ebiten.KeyG) == true {
        	go click_sound()
-        if STATE_SHOW_DEBUG==1 {
+        if STATE_SHOW_DEBUG == 1 {
        	  STATE_SHOW_DEBUG = 0
         } else {
        	  STATE_SHOW_DEBUG = 1
@@ -93,7 +90,7 @@ func state_handler() {
        if IsKeyTriggered(ebiten.KeyI) == true {
          go click_sound()
          header_posx = 0
-         if STATE_SHOW_INVENTORY==1 {
+         if STATE_SHOW_INVENTORY == 1 {
           STATE_SHOW_INVENTORY = 0
          } else {
           STATE_SHOW_INVENTORY = 1
@@ -140,7 +137,27 @@ func state_handler() {
          }
        }
 
-       // Next map
+       if IsKeyTriggered(ebiten.KeyR) == true { // roll dices
+       	go dice_sound()
+        time.Sleep(80 * time.Millisecond)
+       	s1 := rand.NewSource(time.Now().UnixNano())
+        r1 := rand.New(s1)
+        time.Sleep(80 * time.Millisecond)
+        s2 := rand.NewSource(time.Now().UnixNano())
+        r2 := rand.New(s2)
+        time.Sleep(80 * time.Millisecond)
+        s3 := rand.NewSource(time.Now().UnixNano())
+        r3 := rand.New(s3)
+        time.Sleep(80 * time.Millisecond)
+        s4 := rand.NewSource(time.Now().UnixNano())
+        r4 := rand.New(s4)
+        DICE_20_1 = r1.Intn(20) + 1
+        DICE_4_1 = r2.Intn(4) + 1
+        DICE_6_1 = r3.Intn(6) + 1
+        DICE_8_1 = r4.Intn(8) + 1
+	   }
+
+       // Next map - Disabled
        /*if IsKeyTriggered(ebiten.KeyN) == true {
          go click_sound()
          header_posx = 0
@@ -162,24 +179,4 @@ func state_handler() {
          npc[3].posx = 1580
          npc[3].posy = 340  
        } */
-
-       if IsKeyTriggered(ebiten.KeyR) == true { // roll dices
-       	go dice_sound()
-        time.Sleep(80 * time.Millisecond)
-       	s1 := rand.NewSource(time.Now().UnixNano())
-        r1 := rand.New(s1)
-        time.Sleep(80 * time.Millisecond)
-        s2 := rand.NewSource(time.Now().UnixNano())
-        r2 := rand.New(s2)
-        time.Sleep(80 * time.Millisecond)
-        s3 := rand.NewSource(time.Now().UnixNano())
-        r3 := rand.New(s3)
-        time.Sleep(80 * time.Millisecond)
-        s4 := rand.NewSource(time.Now().UnixNano())
-        r4 := rand.New(s4)
-        DICE_20_1 = r1.Intn(20) + 1
-        DICE_4_1 = r2.Intn(4) + 1
-        DICE_6_1 = r3.Intn(6) + 1
-        DICE_8_1 = r4.Intn(8) + 1
-	   }
 }
