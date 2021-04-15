@@ -199,7 +199,7 @@ func (g *Game) Draw(screen *ebiten.Image)  {
             screen.DrawImage(adventurer2Image, opAdventurer2)
             // Player "token" data
             text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].name), mplusSmallFont, int(player[STATE_PLAYER_SELECTED-1].posx+48), int(player[STATE_PLAYER_SELECTED-1].posy), color.White)
-            // TEST - JSON gathered data
+            // TEST - JSON gathered
             //text.Draw(screen, string(MyConfig.name), mplusSmallFont, int(player[STATE_PLAYER_SELECTED-1].posx+48), int(player[STATE_PLAYER_SELECTED-1].posy), color.White)
             text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].hp_max), mplusMiniFont, int(player[STATE_PLAYER_SELECTED-1].posx+64), int(player[STATE_PLAYER_SELECTED-1].posy+18), color.White)
             text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].ac_armor_class), mplusMiniFont, int(player[STATE_PLAYER_SELECTED-1].posx+72), int(player[STATE_PLAYER_SELECTED-1].posy+32), color.White)
@@ -280,14 +280,14 @@ func (g *Game) Draw(screen *ebiten.Image)  {
 
          // Notification for round
          if STATE_ROUND == 0 {
-           text.Draw(screen, "Setting the scene !", mplusNotificationFont, 64, 72, color.White)
-           text.Draw(screen, "DM explains the scene and/or what happens next.", mplusNotificationFont, 64, 94, color.White)
+           text.Draw(screen, "Setting the scene !", mplusNotificationFont, 72, 72, color.White)
+           text.Draw(screen, "DM explains the scene and/or what happens next.", mplusNotificationFont, 72, 94, color.White)
          } else if STATE_ROUND == 1 {
-           text.Draw(screen, "Movement - Up to your speed", mplusNotificationFont, 64, 72, color.White)
-           text.Draw(screen, "Interaction - i.e opening a door, sheathing a weapon", mplusNotificationFont, 64, 94, color.White)
+           text.Draw(screen, "Movement - Up to your speed", mplusNotificationFont, 72, 72, color.White)
+           text.Draw(screen, "Interaction - i.e opening a door, sheathing a weapon", mplusNotificationFont, 72, 94, color.White)
          } else if STATE_ROUND == 2 {
-           text.Draw(screen, "Action - Attack, Dash, Improvise, Hide, Search, ...", mplusNotificationFont, 64, 72, color.White)
-           text.Draw(screen, "Combat resolution", mplusNotificationFont, 64, 94, color.White)
+           text.Draw(screen, "Action - Attack, Dash, Improvise, Hide, Search, ...", mplusNotificationFont, 72, 72, color.White)
+           text.Draw(screen, "Combat resolution", mplusNotificationFont, 72, 94, color.White)
          }
 
          // DM cheat sheet
@@ -312,7 +312,7 @@ func (g *Game) Draw(screen *ebiten.Image)  {
     	}
 
       // Handle single keypress with Ebiten
-      handle_keyboard()
+      keyboard_handler()
 
       // Handle keypress and set states
       state_handler()
@@ -345,5 +345,4 @@ func main() {
         if err := ebiten.RunGame(&Game{}); err != nil {
           log.Fatal(err)
        }
-       //ebiten.Run(update, 1920, 1080, 1, engine_version) Pre Ebiten 1.12
 }

@@ -4,7 +4,7 @@ import (
   "github.com/hajimehoshi/ebiten"
 )
 
-func handle_keyboard() {
+func keyboard_handler() {
     	// Handle keypress with Ebiten
         if ebiten.IsKeyPressed(ebiten.KeyW) {
             keyStates[ebiten.KeyW]++
