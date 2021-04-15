@@ -199,6 +199,7 @@ func (g *Game) Draw(screen *ebiten.Image)  {
             screen.DrawImage(adventurer2Image, opAdventurer2)
             // Player "token" data
             text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].name), mplusSmallFont, int(player[STATE_PLAYER_SELECTED-1].posx+48), int(player[STATE_PLAYER_SELECTED-1].posy), color.White)
+            // TEST - JSON gathered data
             //text.Draw(screen, string(MyConfig.name), mplusSmallFont, int(player[STATE_PLAYER_SELECTED-1].posx+48), int(player[STATE_PLAYER_SELECTED-1].posy), color.White)
             text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].hp_max), mplusMiniFont, int(player[STATE_PLAYER_SELECTED-1].posx+64), int(player[STATE_PLAYER_SELECTED-1].posy+18), color.White)
             text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].ac_armor_class), mplusMiniFont, int(player[STATE_PLAYER_SELECTED-1].posx+72), int(player[STATE_PLAYER_SELECTED-1].posy+32), color.White)

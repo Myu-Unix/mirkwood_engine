@@ -1,20 +1,22 @@
 # Mirkwood Engine 🧝
 
-A prototype of a virtual tabletop written in Go and Ebiten.
+A prototype of a virtual tabletop written in Go 1.16 and Ebiten 1.12
 
 ![img](images/prototype.gif)
 
-(The gif can seems a bit laggy but the animations are of course smooth in reality.)
+(The gif can seems a bit laggy but the animations are smooth in reality)
 
 #### Status/TODOs
 
 Very much a prototype - PR welcomed ! :)
 
+- [ ] Refactor just about everything in a clean and understandable way
 - [ ] Use a proper go library in sound.go
 - [ ] Use a json config file for players character sheet
-- [ ] Implement proper logic for combat - Requires proper knowledge of the tabletop game
+- [ ] Enforce rounds/combat logic - Requires proper knowledge of the tabletop game
 - [ ] Remove licensed assets if any
 - [ ] Investigate Ebiten v2
+- [ ] Investigate go mod
 - [ ] ...
 
 #### Build
