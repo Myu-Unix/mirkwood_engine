@@ -97,7 +97,7 @@ var (
   mplusNotificationFont font.Face
   mplusMiniFont font.Face
   cmd_run []byte
-  engine_version = "Mirkwood Engine 0.5.3 (Prototype)"
+  engine_version = "Mirkwood Engine 0.6.0 (Prototype)"
   engine_text = "Written in Go + Ebiten // Not all those who wander are lost"
   header_posx float64 = 0
   notification_posx float64 = 1920 
@@ -125,7 +125,7 @@ func init() {
   npc[3] = enemy{name: "Dakh", race: "Level 1 Skeleton", posx: 1150, posy: 700, hp_max: "6 HP", ac_armor_class: "AC 5", item1: "Hand-Axe (1d6)", alive: 1}
 }
 
-func update(screen *ebiten.Image) error {
+func (g *Game) Draw(screen *ebiten.Image)  {
         // Images options
         opAdventurer1 := &ebiten.DrawImageOptions{}
         opAdventurer2 := &ebiten.DrawImageOptions{}
@@ -316,7 +316,19 @@ func update(screen *ebiten.Image) error {
       // Handle keypress and set states
       state_handler()
 
-      return nil
+      return
+}
+
+func (g *Game) Update(screen *ebiten.Image) error {
+  return nil
+}
+
+type Game struct {
+  count int
+}
+
+func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
+  return 1920, 1080
 }
 
 func main() {
@@ -326,6 +338,11 @@ func main() {
         readConfigPlayer1()
         fmt.Printf(string(MyConfig.name))
 
-        ebiten.SetFullscreen(true)
-        ebiten.Run(update, 1920, 1080, 1, engine_version)
+       ebiten.SetFullscreen(true)
+       ebiten.SetWindowSize(1920, 1080)
+       ebiten.SetWindowTitle(engine_version)
+        if err := ebiten.RunGame(&Game{}); err != nil {
+          log.Fatal(err)
+       }
+       //ebiten.Run(update, 1920, 1080, 1, engine_version) Pre Ebiten 1.12
 }
