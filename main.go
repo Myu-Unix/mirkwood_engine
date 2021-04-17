@@ -105,11 +105,11 @@ var (
 )
 
 func init() {
-	tt, err := truetype.Parse(Harabara)
-	if err != nil {
-		log.Fatal(err)
-	}
-	const dpi = 72
+  tt, err := truetype.Parse(Harabara)
+  if err != nil {
+    log.Fatal(err)
+  }
+  const dpi = 72
   mplusTitleFont = truetype.NewFace(tt, &truetype.Options{Size:96,DPI:dpi,Hinting: font.HintingFull,})
   mplusLargeFont = truetype.NewFace(tt, &truetype.Options{Size:72,DPI:dpi,Hinting: font.HintingFull,})
   mplusNormalFont = truetype.NewFace(tt, &truetype.Options{Size:48,DPI:dpi,Hinting: font.HintingFull,})
@@ -164,9 +164,9 @@ func (g *Game) Draw(screen *ebiten.Image)  {
           text.Draw(screen, "A short tabletop tutorial campaign", mplusNormalFont, 725, 575, color.White)
           text.Draw(screen, "Myu & Dolph <3", mplusNormalFont, 865, 650, color.White)
           text.Draw(screen, "Press 'p' to start", mplusSmallFont, 1700, 1000, color.White)
-    	} else {
+      } else {
             // Map background handler
-	          screen.DrawImage(background1Image, opBackground)
+            screen.DrawImage(background1Image, opBackground)
             if notification_posx > 32 {
               notification_posx -= 128
             }
@@ -218,11 +218,11 @@ func (g *Game) Draw(screen *ebiten.Image)  {
 
             // If NPC is alive, draw it
             if npc[0].alive == 1 {
-	            screen.DrawImage(enemy1Image, opEnemy1)
-	      	  }
-	      	  if npc[1].alive == 1 {
-	            screen.DrawImage(enemy2Image, opEnemy2)
-	      	  }
+              screen.DrawImage(enemy1Image, opEnemy1)
+            }
+            if npc[1].alive == 1 {
+              screen.DrawImage(enemy2Image, opEnemy2)
+            }
             if npc[2].alive == 1 {
               screen.DrawImage(enemy3Image, opEnemy3)
             }
@@ -244,8 +244,8 @@ func (g *Game) Draw(screen *ebiten.Image)  {
             }
             screen.DrawImage(inventoryImage, opInventory)
 
-  	       	text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].name), mplusNormalFont, 1480, 82, color.White)
-  	       	text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].class), mplusSmallFont, 1480, 114, color.White)
+            text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].name), mplusNormalFont, 1480, 82, color.White)
+            text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].class), mplusSmallFont, 1480, 114, color.White)
             text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].hp_max), mplusSmallFont, 1480, 146, color.White)
             text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].ac_armor_class), mplusSmallFont, 1540, 146, color.White)
             text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].alignment), mplusSmallFont, 1490, 178, color.White)
@@ -266,17 +266,17 @@ func (g *Game) Draw(screen *ebiten.Image)  {
           } // INVENTORY CARD END
 
           // Show/hide enemy data
-		     if npc[STATE_ENEMY_SELECTED-1].alive == 1 {
-  	       text.Draw(screen, string(npc[STATE_ENEMY_SELECTED-1].race), mplusSmallFont, int(npc[STATE_ENEMY_SELECTED-1].posx+48), int(npc[STATE_ENEMY_SELECTED-1].posy-10), color.White)
-  	       text.Draw(screen, string(npc[STATE_ENEMY_SELECTED-1].hp_max), mplusMiniFont, int(npc[STATE_ENEMY_SELECTED-1].posx+64), int(npc[STATE_ENEMY_SELECTED-1].posy+18), color.White)
+         if npc[STATE_ENEMY_SELECTED-1].alive == 1 {
+           text.Draw(screen, string(npc[STATE_ENEMY_SELECTED-1].race), mplusSmallFont, int(npc[STATE_ENEMY_SELECTED-1].posx+48), int(npc[STATE_ENEMY_SELECTED-1].posy-10), color.White)
+           text.Draw(screen, string(npc[STATE_ENEMY_SELECTED-1].hp_max), mplusMiniFont, int(npc[STATE_ENEMY_SELECTED-1].posx+64), int(npc[STATE_ENEMY_SELECTED-1].posy+18), color.White)
            text.Draw(screen, string(npc[STATE_ENEMY_SELECTED-1].ac_armor_class), mplusMiniFont, int(npc[STATE_ENEMY_SELECTED-1].posx+72), int(npc[STATE_ENEMY_SELECTED-1].posy+32), color.White)
            text.Draw(screen, string(npc[STATE_ENEMY_SELECTED-1].item1), mplusMiniFont, int(npc[STATE_ENEMY_SELECTED-1].posx+72), int(npc[STATE_ENEMY_SELECTED-1].posy+46), color.White)
-	       }
+         }
 
          // "For of war"/hidden roof for map 1
-	       if STATE_HIDDEN == 1 {
-	         screen.DrawImage(hideImage, opHide)	
-	       }
+         if STATE_HIDDEN == 1 {
+           screen.DrawImage(hideImage, opHide)  
+         }
 
          // Notification for round
          if STATE_ROUND == 0 {
@@ -309,7 +309,7 @@ func (g *Game) Draw(screen *ebiten.Image)  {
           text.Draw(screen, "I - Show inventory/character panel - U DM info - KP1/KP2/KP3/KP4 to 'kill' enemies 1/2/3/4 - N for next round - G debug info", mplusSmallFont, 32, 670, color.White)
           text.Draw(screen, "PRESS 'U' to open/close this panel :)", mplusLargeFont, 500, 900, color.White)
          }
-    	}
+      }
       return
 }
 

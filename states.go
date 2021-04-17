@@ -8,51 +8,51 @@ import (
 )
 
 func state_handler() {
-	   // Move selected player
+     // Move selected player
        if IsKeyTriggered(ebiten.KeyW) == true {
          player[STATE_PLAYER_SELECTED-1].posy -= 70
        }
        if IsKeyTriggered(ebiten.KeyS) == true {
         player[STATE_PLAYER_SELECTED-1].posy += 70
-   	   }
+       }
        if IsKeyTriggered(ebiten.KeyA) == true {
         player[STATE_PLAYER_SELECTED-1].posx -= 70
-   	   }
+       }
        if IsKeyTriggered(ebiten.KeyD) == true {
         player[STATE_PLAYER_SELECTED-1].posx += 70
-   	   }
-   	// Move selected enemy
-   	   if IsKeyTriggered(ebiten.KeyUp) == true {
+       }
+    // Move selected enemy
+       if IsKeyTriggered(ebiten.KeyUp) == true {
         npc[STATE_ENEMY_SELECTED-1].posy -= 70
-   	   }
+       }
        if IsKeyTriggered(ebiten.KeyDown) == true {
         npc[STATE_ENEMY_SELECTED-1].posy += 70
-   	   }
+       }
        if IsKeyTriggered(ebiten.KeyLeft) == true {
         npc[STATE_ENEMY_SELECTED-1].posx -= 70
-   	   }
+       }
        if IsKeyTriggered(ebiten.KeyRight) == true {
         npc[STATE_ENEMY_SELECTED-1].posx += 70
-   	   }
+       }
     // Toogle fullscreen
        if IsKeyTriggered(ebiten.KeyF) == true {
-       	if STATE_FULLSCREEN == 0 {
+        if STATE_FULLSCREEN == 0 {
          ebiten.SetFullscreen(true)
          STATE_FULLSCREEN=1
         } else {
-        	ebiten.SetFullscreen(false)
-        	STATE_FULLSCREEN=0
+          ebiten.SetFullscreen(false)
+          STATE_FULLSCREEN=0
         }
        }
     // Player choice
        if IsKeyTriggered(ebiten.KeyP) == true {
-       	STATE_SHOW_SPLASH = 0
+        STATE_SHOW_SPLASH = 0
         header_posx = 0
-       	go click_sound()
+        go click_sound()
         if STATE_PLAYER_SELECTED < 2 {
-       	STATE_PLAYER_SELECTED += 1
+        STATE_PLAYER_SELECTED += 1
         } else {
-       	  STATE_PLAYER_SELECTED=1
+          STATE_PLAYER_SELECTED=1
          }
        }
     // DM screen
@@ -75,20 +75,20 @@ func state_handler() {
        }
     // Select enemy
        if IsKeyTriggered(ebiten.KeyE) == true {
-       	go click_sound()
+        go click_sound()
         if STATE_ENEMY_SELECTED < 4 {
-       	  STATE_ENEMY_SELECTED += 1
+          STATE_ENEMY_SELECTED += 1
         } else {
-       	  STATE_ENEMY_SELECTED = 1
+          STATE_ENEMY_SELECTED = 1
         }
       }
     // Show some debug info
        if IsKeyTriggered(ebiten.KeyG) == true {
-       	go click_sound()
+        go click_sound()
         if STATE_SHOW_DEBUG == 1 {
-       	  STATE_SHOW_DEBUG = 0
+          STATE_SHOW_DEBUG = 0
         } else {
-       	  STATE_SHOW_DEBUG = 1
+          STATE_SHOW_DEBUG = 1
         }
        }
     // Toogle inventory
@@ -144,9 +144,9 @@ func state_handler() {
        }
     // Dices be rollin'
        if IsKeyTriggered(ebiten.KeyR) == true { // roll dices
-       	go dice_sound()
+        go dice_sound()
         time.Sleep(80 * time.Millisecond)
-       	s1 := rand.NewSource(time.Now().UnixNano())
+        s1 := rand.NewSource(time.Now().UnixNano())
         r1 := rand.New(s1)
         time.Sleep(80 * time.Millisecond)
         s2 := rand.NewSource(time.Now().UnixNano())
@@ -161,7 +161,7 @@ func state_handler() {
         DICE_4_1 = r2.Intn(4) + 1
         DICE_6_1 = r3.Intn(6) + 1
         DICE_8_1 = r4.Intn(8) + 1
-	   }
+     }
 
        // Next map - Disabled
        /*if IsKeyTriggered(ebiten.KeyN) == true {

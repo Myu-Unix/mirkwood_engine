@@ -5,7 +5,7 @@ import (
 )
 
 func keyboard_handler() {
-    	// Handle keypress with Ebiten
+        // Handle keypress with Ebiten
         if ebiten.IsKeyPressed(ebiten.KeyW) {
             keyStates[ebiten.KeyW]++
         } else {

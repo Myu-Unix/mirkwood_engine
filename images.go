@@ -9,7 +9,7 @@ import (
 func load_images() {
 
 var err error
-	    background1Image, _, err = ebitenutil.NewImageFromFile("images/background.png")
+      background1Image, _, err = ebitenutil.NewImageFromFile("images/background.png")
         if err != nil {
                 log.Fatal(err)
         }
