@@ -131,6 +131,7 @@ func state_handler() {
        /*if IsKeyTriggered(ebiten.KeyMinus) == true {
          npc[STATE_ENEMY_SELECTED].hp_max = strconv(npc[STATE_ENEMY_SELECTED].hp_max) -= 1
        } */
+       
     // Change game round
        if IsKeyTriggered(ebiten.KeyN) == true {
         notification_posx = 1920 

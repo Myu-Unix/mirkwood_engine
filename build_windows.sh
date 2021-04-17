@@ -1,4 +1,4 @@
 #!/bin/bash
 
-export GO111MODULE=off
+go mod tidy
 GOOS=windows GOARCH=amd64 go build

@@ -310,22 +310,21 @@ func (g *Game) Draw(screen *ebiten.Image)  {
           text.Draw(screen, "PRESS 'U' to open/close this panel :)", mplusLargeFont, 500, 900, color.White)
          }
     	}
-
-      // Handle single keypress with Ebiten
-      keyboard_handler()
-
-      // Handle keypress and set states
-      state_handler()
-
       return
 }
 
 func (g *Game) Update() error {
+  // Handle single keypress with Ebiten
+  keyboard_handler()
+
+  // Handle keypress and set states
+  state_handler()
+
   return nil
 }
 
 type Game struct {
-  count int
+
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
@@ -333,16 +332,17 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 }
 
 func main() {
-	      load_images()
-        fmt.Println(engine_version)
-        // TEST
-        readConfigPlayer1()
-        fmt.Printf(string(MyConfig.name))
+  load_images()
+  fmt.Println(engine_version)
 
-       ebiten.SetFullscreen(true)
-       ebiten.SetWindowSize(1920, 1080)
-       ebiten.SetWindowTitle(engine_version)
-        if err := ebiten.RunGame(&Game{}); err != nil {
-          log.Fatal(err)
-       }
+  // TEST
+  readConfigPlayer1()
+  fmt.Printf(string(MyConfig.name))
+
+  ebiten.SetFullscreen(true)
+  ebiten.SetWindowSize(1920, 1080)
+  ebiten.SetWindowTitle(engine_version)
+  if err := ebiten.RunGame(&Game{}); err != nil {
+    log.Fatal(err)
+  }
 }
