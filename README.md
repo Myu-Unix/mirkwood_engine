@@ -19,12 +19,16 @@ Very much a prototype - PR welcomed ! :)
 - [X] Investigate go mod
 - [ ] ...
 
-#### Build
+#### Build and run
 
     ./build.sh or ./build_windows.sh
     ./mirkwood_engine or mirkwood_engine.exe
 
 Press 'U' to get shortcuts info
+
+#### Update deps
+
+    go mod tidy
 
 #### Platforms
 
