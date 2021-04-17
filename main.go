@@ -97,7 +97,7 @@ var (
   mplusNotificationFont font.Face
   mplusMiniFont font.Face
   cmd_run []byte
-  engine_version = "Mirkwood Engine 0.6.0 (Prototype)"
+  engine_version = "Mirkwood Engine 0.7.0 (Prototype)"
   engine_text = "Written in Go + Ebiten // Not all those who wander are lost"
   header_posx float64 = 0
   notification_posx float64 = 1920 
