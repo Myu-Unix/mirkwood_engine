@@ -16,7 +16,7 @@ Very much a prototype - PR welcomed ! :)
 - [ ] Enforce rounds/combat logic - Requires proper knowledge of the tabletop game
 - [ ] Remove licensed assets if any
 - [ ] Investigate Ebiten v2
-- [ ] Investigate go mod
+- [X] Investigate go mod
 - [ ] ...
 
 #### Build
