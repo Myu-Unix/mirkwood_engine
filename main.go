@@ -4,10 +4,10 @@
 package main
 
 import (
-  "github.com/hajimehoshi/ebiten"
-  "github.com/hajimehoshi/ebiten/ebitenutil"
+  "github.com/hajimehoshi/ebiten/v2"
+  "github.com/hajimehoshi/ebiten/v2/ebitenutil"
   "github.com/golang/freetype/truetype"
-  "github.com/hajimehoshi/ebiten/text"
+  "github.com/hajimehoshi/ebiten/v2/text"
   "golang.org/x/image/font"
   "image/color"
   "log"
@@ -320,7 +320,7 @@ func (g *Game) Draw(screen *ebiten.Image)  {
       return
 }
 
-func (g *Game) Update(screen *ebiten.Image) error {
+func (g *Game) Update() error {
   return nil
 }
 
