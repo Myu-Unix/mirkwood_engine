@@ -5,10 +5,26 @@ import (
 	"image"
 	_ "image/png"
 
+	"github.com/golang/freetype/truetype"
 	"github.com/hajimehoshi/ebiten/v2"
+	"golang.org/x/image/font"
 )
 
 type assets struct {
+	images *imageAssets
+	fonts  *fontAssets
+}
+
+type fontAssets struct {
+	mplusTitleFont        font.Face
+	mplusLargeFont        font.Face
+	mplusNormalFont       font.Face
+	mplusSmallFont        font.Face
+	mplusNotificationFont font.Face
+	mplusMiniFont         font.Face
+}
+
+type imageAssets struct {
 	background1Image  *ebiten.Image
 	background2Image  *ebiten.Image
 	splashImage       *ebiten.Image
@@ -45,8 +61,45 @@ func newImageFromEmbed(path string) (*ebiten.Image, error) {
 	return ebImg, nil
 }
 
-func loadImages() (*assets, error) {
-	a := assets{}
+func loadAssets() (*assets, error) {
+	fonts, err := loadFonts()
+	if err != nil {
+		return nil, err
+	}
+
+	imgs, err := loadImages()
+	if err != nil {
+		return nil, err
+	}
+	return &assets{
+		fonts:  fonts,
+		images: imgs,
+	}, nil
+}
+
+func loadFonts() (*fontAssets, error) {
+	var a fontAssets
+	b, err := assetFS.ReadFile("fonts/harabara.ttf")
+	if err != nil {
+		return nil, err
+	}
+
+	tt, err := truetype.Parse(b)
+	if err != nil {
+		return nil, err
+	}
+	const dpi = 72
+	a.mplusTitleFont = truetype.NewFace(tt, &truetype.Options{Size: 96, DPI: dpi, Hinting: font.HintingFull})
+	a.mplusLargeFont = truetype.NewFace(tt, &truetype.Options{Size: 72, DPI: dpi, Hinting: font.HintingFull})
+	a.mplusNormalFont = truetype.NewFace(tt, &truetype.Options{Size: 48, DPI: dpi, Hinting: font.HintingFull})
+	a.mplusSmallFont = truetype.NewFace(tt, &truetype.Options{Size: 24, DPI: dpi, Hinting: font.HintingFull})
+	a.mplusNotificationFont = truetype.NewFace(tt, &truetype.Options{Size: 20, DPI: dpi, Hinting: font.HintingFull})
+	a.mplusMiniFont = truetype.NewFace(tt, &truetype.Options{Size: 14, DPI: dpi, Hinting: font.HintingFull})
+	return &a, nil
+}
+
+func loadImages() (*imageAssets, error) {
+	a := imageAssets{}
 	var err error
 	a.background1Image, err = newImageFromEmbed("images/background.png")
 	if err != nil {
