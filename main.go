@@ -5,15 +5,16 @@ package main
 
 import (
 	"fmt"
+	"image/color"
+	"log"
+	"math"
+	"strconv"
+
 	"github.com/golang/freetype/truetype"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/hajimehoshi/ebiten/v2/text"
 	"golang.org/x/image/font"
-	"image/color"
-	"log"
-	"math"
-	"strconv"
 )
 
 type adventurer struct {
@@ -331,7 +332,10 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 }
 
 func main() {
-	load_images()
+	err := loadImages()
+	if err != nil {
+		log.Fatal(err)
+	}
 	fmt.Println(engine_version)
 
 	// TEST
