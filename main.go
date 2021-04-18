@@ -339,7 +339,10 @@ func main() {
 	fmt.Println(engine_version)
 
 	// TEST
-	readConfigPlayer1()
+	err = readConfigPlayer1()
+	if err != nil {
+		log.Fatal(err)
+	}
 	fmt.Printf(string(MyConfig.name))
 
 	ebiten.SetFullscreen(true)
