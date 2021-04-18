@@ -1,84 +1,124 @@
 package main
 
 import (
+	"bytes"
+	"image"
 	_ "image/png"
 
-	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+	"github.com/hajimehoshi/ebiten/v2"
 )
 
-func loadImages() error {
+type assets struct {
+	background1Image  *ebiten.Image
+	background2Image  *ebiten.Image
+	splashImage       *ebiten.Image
+	adventurer1Image  *ebiten.Image
+	adventurer2Image  *ebiten.Image
+	header1Image      *ebiten.Image
+	header2Image      *ebiten.Image
+	enemy1Image       *ebiten.Image
+	enemy2Image       *ebiten.Image
+	enemy3Image       *ebiten.Image
+	enemy4Image       *ebiten.Image
+	inventoryImage    *ebiten.Image
+	dice20Image       *ebiten.Image
+	dice4Image        *ebiten.Image
+	dice6Image        *ebiten.Image
+	dice8Image        *ebiten.Image
+	hideImage         *ebiten.Image
+	dmImage           *ebiten.Image
+	notificationImage *ebiten.Image
+}
+
+func newImageFromEmbed(path string) (*ebiten.Image, error) {
+	b, err := assetFS.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+
+	r := bytes.NewReader(b)
+	img, _, err := image.Decode(r)
+	if err != nil {
+		return nil, err
+	}
+	ebImg := ebiten.NewImageFromImage(img)
+	return ebImg, nil
+}
+
+func loadImages() (*assets, error) {
+	a := assets{}
 	var err error
-	background1Image, _, err = ebitenutil.NewImageFromFile("images/background.png")
+	a.background1Image, err = newImageFromEmbed("images/background.png")
 	if err != nil {
-		return err
+		return nil, err
 	}
-	hideImage, _, err = ebitenutil.NewImageFromFile("images/hide.png")
+	a.hideImage, err = newImageFromEmbed("images/hide.png")
 	if err != nil {
-		return err
+		return nil, err
 	}
-	adventurer1Image, _, err = ebitenutil.NewImageFromFile("images/avatar.png")
+	a.adventurer1Image, err = newImageFromEmbed("images/avatar.png")
 	if err != nil {
-		return err
+		return nil, err
 	}
-	adventurer2Image, _, err = ebitenutil.NewImageFromFile("images/avatar2.png")
+	a.adventurer2Image, err = newImageFromEmbed("images/avatar2.png")
 	if err != nil {
-		return err
+		return nil, err
 	}
-	header1Image, _, err = ebitenutil.NewImageFromFile("images/player1_header2.png")
+	a.header1Image, err = newImageFromEmbed("images/player1_header2.png")
 	if err != nil {
-		return err
+		return nil, err
 	}
-	header2Image, _, err = ebitenutil.NewImageFromFile("images/player2_header2.png")
+	a.header2Image, err = newImageFromEmbed("images/player2_header2.png")
 	if err != nil {
-		return err
+		return nil, err
 	}
-	enemy1Image, _, err = ebitenutil.NewImageFromFile("images/goblin.png")
+	a.enemy1Image, err = newImageFromEmbed("images/goblin.png")
 	if err != nil {
-		return err
+		return nil, err
 	}
-	enemy2Image, _, err = ebitenutil.NewImageFromFile("images/warg.png")
+	a.enemy2Image, err = newImageFromEmbed("images/warg.png")
 	if err != nil {
-		return err
+		return nil, err
 	}
-	enemy3Image, _, err = ebitenutil.NewImageFromFile("images/skeleton64.png")
+	a.enemy3Image, err = newImageFromEmbed("images/skeleton64.png")
 	if err != nil {
-		return err
+		return nil, err
 	}
-	enemy4Image, _, err = ebitenutil.NewImageFromFile("images/skeleton64_axe.png")
+	a.enemy4Image, err = newImageFromEmbed("images/skeleton64_axe.png")
 	if err != nil {
-		return err
+		return nil, err
 	}
-	SplashImage, _, err = ebitenutil.NewImageFromFile("images/splash.png")
+	a.splashImage, err = newImageFromEmbed("images/splash.png")
 	if err != nil {
-		return err
+		return nil, err
 	}
-	inventoryImage, _, err = ebitenutil.NewImageFromFile("images/inventory.png")
+	a.inventoryImage, err = newImageFromEmbed("images/inventory.png")
 	if err != nil {
-		return err
+		return nil, err
 	}
-	dice20Image, _, err = ebitenutil.NewImageFromFile("images/dice20.png")
+	a.dice20Image, err = newImageFromEmbed("images/dice20.png")
 	if err != nil {
-		return err
+		return nil, err
 	}
-	dice4Image, _, err = ebitenutil.NewImageFromFile("images/dice4.png")
+	a.dice4Image, err = newImageFromEmbed("images/dice4.png")
 	if err != nil {
-		return err
+		return nil, err
 	}
-	dice6Image, _, err = ebitenutil.NewImageFromFile("images/dice6.png")
+	a.dice6Image, err = newImageFromEmbed("images/dice6.png")
 	if err != nil {
-		return err
+		return nil, err
 	}
-	dice8Image, _, err = ebitenutil.NewImageFromFile("images/dice8.png")
+	a.dice8Image, err = newImageFromEmbed("images/dice8.png")
 	if err != nil {
-		return err
+		return nil, err
 	}
-	dmImage, _, err = ebitenutil.NewImageFromFile("images/dm.png")
+	a.dmImage, err = newImageFromEmbed("images/dm.png")
 	if err != nil {
-		return err
+		return nil, err
 	}
-	notificationImage, _, err = ebitenutil.NewImageFromFile("images/notification.png")
+	a.notificationImage, err = newImageFromEmbed("images/notification.png")
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	return &a, nil
 }

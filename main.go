@@ -4,6 +4,7 @@
 package main
 
 import (
+	"embed"
 	"fmt"
 	"image/color"
 	"log"
@@ -54,26 +55,10 @@ type enemy struct {
 }
 
 var (
+	//go:embed images
+	assetFS embed.FS
+
 	MyConfig              adventurer // TEST
-	background1Image      *ebiten.Image
-	background2Image      *ebiten.Image
-	SplashImage           *ebiten.Image
-	adventurer1Image      *ebiten.Image
-	adventurer2Image      *ebiten.Image
-	header1Image          *ebiten.Image
-	header2Image          *ebiten.Image
-	enemy1Image           *ebiten.Image
-	enemy2Image           *ebiten.Image
-	enemy3Image           *ebiten.Image
-	enemy4Image           *ebiten.Image
-	inventoryImage        *ebiten.Image
-	dice20Image           *ebiten.Image
-	dice4Image            *ebiten.Image
-	dice6Image            *ebiten.Image
-	dice8Image            *ebiten.Image
-	hideImage             *ebiten.Image
-	dmImage               *ebiten.Image
-	notificationImage     *ebiten.Image
 	player                [2]adventurer
 	npc                   [4]enemy
 	DICE_20_1             int = 20
@@ -160,18 +145,18 @@ func (g *Game) Draw(screen *ebiten.Image) {
 
 	// Draw images
 	if STATE_SHOW_SPLASH > 0 { // This shows the splashscreen
-		screen.DrawImage(SplashImage, opBackground)
+		screen.DrawImage(g.assets.splashImage, opBackground)
 		text.Draw(screen, "~ Into Mirkwood ~", mplusTitleFont, 730, 400, color.White)
 		text.Draw(screen, "A short tabletop tutorial campaign", mplusNormalFont, 725, 575, color.White)
 		text.Draw(screen, "Myu & Dolph <3", mplusNormalFont, 865, 650, color.White)
 		text.Draw(screen, "Press 'p' to start", mplusSmallFont, 1700, 1000, color.White)
 	} else {
 		// Map background handler
-		screen.DrawImage(background1Image, opBackground)
+		screen.DrawImage(g.assets.background1Image, opBackground)
 		if notification_posx > 32 {
 			notification_posx -= 128
 		}
-		screen.DrawImage(notificationImage, opNotification)
+		screen.DrawImage(g.assets.notificationImage, opNotification)
 
 		// Draw a line between selected player and target (if alive)
 		if STATE_LINK == 1 {
@@ -187,17 +172,17 @@ func (g *Game) Draw(screen *ebiten.Image) {
 			}
 		}
 		// Drawing dices and values
-		screen.DrawImage(dice20Image, opDice20)
-		screen.DrawImage(dice4Image, opDice4)
-		screen.DrawImage(dice6Image, opDice6)
-		screen.DrawImage(dice8Image, opDice8)
+		screen.DrawImage(g.assets.dice20Image, opDice20)
+		screen.DrawImage(g.assets.dice4Image, opDice4)
+		screen.DrawImage(g.assets.dice6Image, opDice6)
+		screen.DrawImage(g.assets.dice8Image, opDice8)
 		text.Draw(screen, string(strconv.Itoa(DICE_20_1)), mplusNormalFont, 140, 200, color.White)
 		text.Draw(screen, string(strconv.Itoa(DICE_4_1)), mplusNormalFont, 140, 300, color.White)
 		text.Draw(screen, string(strconv.Itoa(DICE_6_1)), mplusNormalFont, 140, 400, color.White)
 		text.Draw(screen, string(strconv.Itoa(DICE_8_1)), mplusNormalFont, 140, 500, color.White)
 		// Drawing adventurers/players
-		screen.DrawImage(adventurer1Image, opAdventurer1)
-		screen.DrawImage(adventurer2Image, opAdventurer2)
+		screen.DrawImage(g.assets.adventurer1Image, opAdventurer1)
+		screen.DrawImage(g.assets.adventurer2Image, opAdventurer2)
 		// Player "token" data
 		text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].name), mplusSmallFont, int(player[STATE_PLAYER_SELECTED-1].posx+48), int(player[STATE_PLAYER_SELECTED-1].posy), color.White)
 		// TEST - JSON gathered
@@ -219,16 +204,16 @@ func (g *Game) Draw(screen *ebiten.Image) {
 
 		// If NPC is alive, draw it
 		if npc[0].alive == 1 {
-			screen.DrawImage(enemy1Image, opEnemy1)
+			screen.DrawImage(g.assets.enemy1Image, opEnemy1)
 		}
 		if npc[1].alive == 1 {
-			screen.DrawImage(enemy2Image, opEnemy2)
+			screen.DrawImage(g.assets.enemy2Image, opEnemy2)
 		}
 		if npc[2].alive == 1 {
-			screen.DrawImage(enemy3Image, opEnemy3)
+			screen.DrawImage(g.assets.enemy3Image, opEnemy3)
 		}
 		if npc[3].alive == 1 {
-			screen.DrawImage(enemy4Image, opEnemy4)
+			screen.DrawImage(g.assets.enemy4Image, opEnemy4)
 		}
 
 		// INVENTORY CARD
@@ -239,11 +224,11 @@ func (g *Game) Draw(screen *ebiten.Image) {
 			}
 			// Show player header image
 			if STATE_PLAYER_SELECTED == 1 {
-				screen.DrawImage(header1Image, opHeader)
+				screen.DrawImage(g.assets.header1Image, opHeader)
 			} else {
-				screen.DrawImage(header2Image, opHeader)
+				screen.DrawImage(g.assets.header2Image, opHeader)
 			}
-			screen.DrawImage(inventoryImage, opInventory)
+			screen.DrawImage(g.assets.inventoryImage, opInventory)
 
 			text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].name), mplusNormalFont, 1480, 82, color.White)
 			text.Draw(screen, string(player[STATE_PLAYER_SELECTED-1].class), mplusSmallFont, 1480, 114, color.White)
@@ -276,7 +261,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 
 		// "For of war"/hidden roof for map 1
 		if STATE_HIDDEN == 1 {
-			screen.DrawImage(hideImage, opHide)
+			screen.DrawImage(g.assets.hideImage, opHide)
 		}
 
 		// Notification for round
@@ -293,7 +278,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 
 		// DM cheat sheet
 		if STATE_DM == 1 {
-			screen.DrawImage(dmImage, opBackground)
+			screen.DrawImage(g.assets.dmImage, opBackground)
 			text.Draw(screen, "--- SUPERSIMPLIFIED COMBAT RULES (WIP) ---", mplusSmallFont, 32, 32, color.RGBA{255, 128, 0, 255})
 			text.Draw(screen, "Is anyone surprised ? If you surprise an enemy, you'll have an additional turn.", mplusSmallFont, 32, 82, color.White)
 			text.Draw(screen, "Everyone rolls initiative (1d20 + initiative modifier) and the one with highest start first", mplusSmallFont, 32, 132, color.White)
@@ -325,6 +310,7 @@ func (g *Game) Update() error {
 }
 
 type Game struct {
+	assets *assets
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
@@ -332,7 +318,7 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 }
 
 func main() {
-	err := loadImages()
+	a, err := loadImages()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -348,7 +334,10 @@ func main() {
 	ebiten.SetFullscreen(true)
 	ebiten.SetWindowSize(1920, 1080)
 	ebiten.SetWindowTitle(engine_version)
-	if err := ebiten.RunGame(&Game{}); err != nil {
+	game := Game{
+		assets: a,
+	}
+	if err := ebiten.RunGame(&game); err != nil {
 		log.Fatal(err)
 	}
 }
