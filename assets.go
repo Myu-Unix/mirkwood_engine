@@ -77,8 +77,12 @@ func loadAssets() (*assets, error) {
 	}, nil
 }
 
+func customFontSize(tt *truetype.Font, size float64) font.Face {
+	const dpi = 72
+	return truetype.NewFace(tt, &truetype.Options{Size: size, DPI: dpi, Hinting: font.HintingFull})
+}
+
 func loadFonts() (*fontAssets, error) {
-	var a fontAssets
 	b, err := assetFS.ReadFile("fonts/harabara.ttf")
 	if err != nil {
 		return nil, err
@@ -88,14 +92,14 @@ func loadFonts() (*fontAssets, error) {
 	if err != nil {
 		return nil, err
 	}
-	const dpi = 72
-	a.mplusTitleFont = truetype.NewFace(tt, &truetype.Options{Size: 96, DPI: dpi, Hinting: font.HintingFull})
-	a.mplusLargeFont = truetype.NewFace(tt, &truetype.Options{Size: 72, DPI: dpi, Hinting: font.HintingFull})
-	a.mplusNormalFont = truetype.NewFace(tt, &truetype.Options{Size: 48, DPI: dpi, Hinting: font.HintingFull})
-	a.mplusSmallFont = truetype.NewFace(tt, &truetype.Options{Size: 24, DPI: dpi, Hinting: font.HintingFull})
-	a.mplusNotificationFont = truetype.NewFace(tt, &truetype.Options{Size: 20, DPI: dpi, Hinting: font.HintingFull})
-	a.mplusMiniFont = truetype.NewFace(tt, &truetype.Options{Size: 14, DPI: dpi, Hinting: font.HintingFull})
-	return &a, nil
+	return &fontAssets{
+		mplusTitleFont:        customFontSize(tt, 96),
+		mplusLargeFont:        customFontSize(tt, 72),
+		mplusNormalFont:       customFontSize(tt, 48),
+		mplusSmallFont:        customFontSize(tt, 24),
+		mplusNotificationFont: customFontSize(tt, 20),
+		mplusMiniFont:         customFontSize(tt, 14),
+	}, nil
 }
 
 func loadImages() (*imageAssets, error) {
