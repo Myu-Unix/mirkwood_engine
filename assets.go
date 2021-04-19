@@ -104,78 +104,33 @@ func loadFonts() (*fontAssets, error) {
 
 func loadImages() (*imageAssets, error) {
 	a := imageAssets{}
+	matches := map[string]**ebiten.Image{
+		"images/background.png":      &a.background1Image,
+		"images/hide.png":            &a.hideImage,
+		"images/avatar.png":          &a.adventurer1Image,
+		"images/avatar2.png":         &a.adventurer2Image,
+		"images/player1_header2.png": &a.header1Image,
+		"images/player2_header2.png": &a.header2Image,
+		"images/goblin.png":          &a.enemy1Image,
+		"images/warg.png":            &a.enemy2Image,
+		"images/skeleton64.png":      &a.enemy3Image,
+		"images/skeleton64_axe.png":  &a.enemy4Image,
+		"images/splash.png":          &a.splashImage,
+		"images/inventory.png":       &a.inventoryImage,
+		"images/dice20.png":          &a.dice20Image,
+		"images/dice4.png":           &a.dice4Image,
+		"images/dice6.png":           &a.dice6Image,
+		"images/dice8.png":           &a.dice8Image,
+		"images/dm.png":              &a.dmImage,
+		"images/notification.png":    &a.notificationImage,
+	}
+
 	var err error
-	a.background1Image, err = newImageFromEmbed("images/background.png")
-	if err != nil {
-		return nil, err
-	}
-	a.hideImage, err = newImageFromEmbed("images/hide.png")
-	if err != nil {
-		return nil, err
-	}
-	a.adventurer1Image, err = newImageFromEmbed("images/avatar.png")
-	if err != nil {
-		return nil, err
-	}
-	a.adventurer2Image, err = newImageFromEmbed("images/avatar2.png")
-	if err != nil {
-		return nil, err
-	}
-	a.header1Image, err = newImageFromEmbed("images/player1_header2.png")
-	if err != nil {
-		return nil, err
-	}
-	a.header2Image, err = newImageFromEmbed("images/player2_header2.png")
-	if err != nil {
-		return nil, err
-	}
-	a.enemy1Image, err = newImageFromEmbed("images/goblin.png")
-	if err != nil {
-		return nil, err
-	}
-	a.enemy2Image, err = newImageFromEmbed("images/warg.png")
-	if err != nil {
-		return nil, err
-	}
-	a.enemy3Image, err = newImageFromEmbed("images/skeleton64.png")
-	if err != nil {
-		return nil, err
-	}
-	a.enemy4Image, err = newImageFromEmbed("images/skeleton64_axe.png")
-	if err != nil {
-		return nil, err
-	}
-	a.splashImage, err = newImageFromEmbed("images/splash.png")
-	if err != nil {
-		return nil, err
-	}
-	a.inventoryImage, err = newImageFromEmbed("images/inventory.png")
-	if err != nil {
-		return nil, err
-	}
-	a.dice20Image, err = newImageFromEmbed("images/dice20.png")
-	if err != nil {
-		return nil, err
-	}
-	a.dice4Image, err = newImageFromEmbed("images/dice4.png")
-	if err != nil {
-		return nil, err
-	}
-	a.dice6Image, err = newImageFromEmbed("images/dice6.png")
-	if err != nil {
-		return nil, err
-	}
-	a.dice8Image, err = newImageFromEmbed("images/dice8.png")
-	if err != nil {
-		return nil, err
-	}
-	a.dmImage, err = newImageFromEmbed("images/dm.png")
-	if err != nil {
-		return nil, err
-	}
-	a.notificationImage, err = newImageFromEmbed("images/notification.png")
-	if err != nil {
-		return nil, err
+	for path, img := range matches {
+		*img, err = newImageFromEmbed(path)
+		if err != nil {
+			return nil, err
+		}
 	}
 	return &a, nil
 }
