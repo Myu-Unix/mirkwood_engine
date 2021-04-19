@@ -6,15 +6,19 @@ import (
 	"os"
 )
 
-func readConfigPlayer1() {
+func readConfigPlayer1() error {
 	// Read player1.json
 	fmt.Println("Reading config file for player1...")
-	file, _ := os.Open("config/player1.json")
+	file, err := os.Open("config/player1.json")
+	if err != nil {
+		return err
+	}
 	defer file.Close()
 	decoder := json.NewDecoder(file)
-	err := decoder.Decode(&MyConfig) // Defined in var
+	err = decoder.Decode(&MyConfig) // Defined in var
 	if err != nil {
-		fmt.Println("error:", err)
+		return err
 	}
 	fmt.Println(MyConfig.race)
+	return nil
 }
