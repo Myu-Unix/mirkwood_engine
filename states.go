@@ -1,41 +1,42 @@
 package main
 
 import (
-	"github.com/hajimehoshi/ebiten/v2"
 	"math/rand"
 	"os"
 	"time"
+
+	"github.com/hajimehoshi/ebiten/v2"
 )
 
 func state_handler() {
 	// Move selected player
-	if IsKeyTriggered(ebiten.KeyW) == true {
+	if IsKeyTriggered(ebiten.KeyW) {
 		player[STATE_PLAYER_SELECTED-1].posy -= 70
 	}
-	if IsKeyTriggered(ebiten.KeyS) == true {
+	if IsKeyTriggered(ebiten.KeyS) {
 		player[STATE_PLAYER_SELECTED-1].posy += 70
 	}
-	if IsKeyTriggered(ebiten.KeyA) == true {
+	if IsKeyTriggered(ebiten.KeyA) {
 		player[STATE_PLAYER_SELECTED-1].posx -= 70
 	}
-	if IsKeyTriggered(ebiten.KeyD) == true {
+	if IsKeyTriggered(ebiten.KeyD) {
 		player[STATE_PLAYER_SELECTED-1].posx += 70
 	}
 	// Move selected enemy
-	if IsKeyTriggered(ebiten.KeyUp) == true {
+	if IsKeyTriggered(ebiten.KeyUp) {
 		npc[STATE_ENEMY_SELECTED-1].posy -= 70
 	}
-	if IsKeyTriggered(ebiten.KeyDown) == true {
+	if IsKeyTriggered(ebiten.KeyDown) {
 		npc[STATE_ENEMY_SELECTED-1].posy += 70
 	}
-	if IsKeyTriggered(ebiten.KeyLeft) == true {
+	if IsKeyTriggered(ebiten.KeyLeft) {
 		npc[STATE_ENEMY_SELECTED-1].posx -= 70
 	}
-	if IsKeyTriggered(ebiten.KeyRight) == true {
+	if IsKeyTriggered(ebiten.KeyRight) {
 		npc[STATE_ENEMY_SELECTED-1].posx += 70
 	}
 	// Toogle fullscreen
-	if IsKeyTriggered(ebiten.KeyF) == true {
+	if IsKeyTriggered(ebiten.KeyF) {
 		if STATE_FULLSCREEN == 0 {
 			ebiten.SetFullscreen(true)
 			STATE_FULLSCREEN = 1
@@ -45,7 +46,7 @@ func state_handler() {
 		}
 	}
 	// Player choice
-	if IsKeyTriggered(ebiten.KeyP) == true {
+	if IsKeyTriggered(ebiten.KeyP) {
 		STATE_SHOW_SPLASH = 0
 		header_posx = 0
 		go click_sound()
@@ -56,7 +57,7 @@ func state_handler() {
 		}
 	}
 	// DM screen
-	if IsKeyTriggered(ebiten.KeyU) == true {
+	if IsKeyTriggered(ebiten.KeyU) {
 		go click_sound()
 		if STATE_DM == 1 {
 			STATE_DM = 0
@@ -65,7 +66,7 @@ func state_handler() {
 		}
 	}
 	// Link/Measure
-	if IsKeyTriggered(ebiten.KeyL) == true {
+	if IsKeyTriggered(ebiten.KeyL) {
 		go click_sound()
 		if STATE_LINK == 1 {
 			STATE_LINK = 0
@@ -74,7 +75,7 @@ func state_handler() {
 		}
 	}
 	// Select enemy
-	if IsKeyTriggered(ebiten.KeyE) == true {
+	if IsKeyTriggered(ebiten.KeyE) {
 		go click_sound()
 		if STATE_ENEMY_SELECTED < 4 {
 			STATE_ENEMY_SELECTED += 1
@@ -83,7 +84,7 @@ func state_handler() {
 		}
 	}
 	// Show some debug info
-	if IsKeyTriggered(ebiten.KeyG) == true {
+	if IsKeyTriggered(ebiten.KeyG) {
 		go click_sound()
 		if STATE_SHOW_DEBUG == 1 {
 			STATE_SHOW_DEBUG = 0
@@ -92,7 +93,7 @@ func state_handler() {
 		}
 	}
 	// Toogle inventory
-	if IsKeyTriggered(ebiten.KeyI) == true {
+	if IsKeyTriggered(ebiten.KeyI) {
 		go click_sound()
 		header_posx = 0
 		if STATE_SHOW_INVENTORY == 1 {
@@ -102,38 +103,38 @@ func state_handler() {
 		}
 	}
 	// Quit
-	if IsKeyTriggered(ebiten.KeyK) == true {
+	if IsKeyTriggered(ebiten.KeyK) {
 		os.Exit(0)
 	}
 
 	// Hidden area on the map
-	if IsKeyTriggered(ebiten.KeyH) == true {
+	if IsKeyTriggered(ebiten.KeyH) {
 		STATE_HIDDEN = 0
 	}
 	// Kill enemy (temporary)
-	if IsKeyTriggered(ebiten.KeyKP1) == true {
+	if IsKeyTriggered(ebiten.KeyKP1) {
 		npc[0].alive = 0
 		STATE_LINK = 0
 	}
-	if IsKeyTriggered(ebiten.KeyKP2) == true {
+	if IsKeyTriggered(ebiten.KeyKP2) {
 		npc[1].alive = 0
 		STATE_LINK = 0
 	}
-	if IsKeyTriggered(ebiten.KeyKP3) == true {
+	if IsKeyTriggered(ebiten.KeyKP3) {
 		npc[2].alive = 0
 		STATE_LINK = 0
 	}
-	if IsKeyTriggered(ebiten.KeyKP4) == true {
+	if IsKeyTriggered(ebiten.KeyKP4) {
 		npc[3].alive = 0
 		STATE_LINK = 0
 	}
 	// Remove health from enemies WIP
-	/*if IsKeyTriggered(ebiten.KeyMinus) == true {
+	/*if IsKeyTriggered(ebiten.KeyMinus) {
 	  npc[STATE_ENEMY_SELECTED].hp_max = strconv(npc[STATE_ENEMY_SELECTED].hp_max) -= 1
 	} */
 
 	// Change game round
-	if IsKeyTriggered(ebiten.KeyN) == true {
+	if IsKeyTriggered(ebiten.KeyN) {
 		notification_posx = 1920
 		go click_sound()
 		if STATE_ROUND < 2 {
@@ -143,7 +144,7 @@ func state_handler() {
 		}
 	}
 	// Dices be rollin'
-	if IsKeyTriggered(ebiten.KeyR) == true { // roll dices
+	if IsKeyTriggered(ebiten.KeyR) { // roll dices
 		go dice_sound()
 		time.Sleep(80 * time.Millisecond)
 		s1 := rand.NewSource(time.Now().UnixNano())
@@ -164,7 +165,7 @@ func state_handler() {
 	}
 
 	// Next map - Disabled
-	/*if IsKeyTriggered(ebiten.KeyN) == true {
+	/*if IsKeyTriggered(ebiten.KeyN) {
 	  go click_sound()
 	  header_posx = 0
 	  STATE_MAP=2
