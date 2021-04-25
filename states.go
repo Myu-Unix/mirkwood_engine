@@ -37,13 +37,8 @@ func (g *Game) state_handler() {
 	}
 	// Toogle fullscreen
 	if IsKeyTriggered(ebiten.KeyF) {
-		if g.config.fullscreen == false {
-			ebiten.SetFullscreen(true)
-			g.config.fullscreen = true
-		} else {
-			ebiten.SetFullscreen(false)
-			g.config.fullscreen = false
-		}
+		g.config.fullscreen = !g.config.fullscreen
+		ebiten.SetFullscreen(g.config.fullscreen)
 	}
 	// Player choice
 	if IsKeyTriggered(ebiten.KeyP) {
@@ -59,20 +54,12 @@ func (g *Game) state_handler() {
 	// DM screen
 	if IsKeyTriggered(ebiten.KeyU) {
 		go click_sound()
-		if g.config.dm == true {
-			g.config.dm = false
-		} else {
-			g.config.dm = true
-		}
+		g.config.dm = !g.config.dm
 	}
 	// Link/Measure
 	if IsKeyTriggered(ebiten.KeyL) {
 		go click_sound()
-		if g.config.link == true {
-			g.config.link = false
-		} else {
-			g.config.link = true
-		}
+		g.config.link = !g.config.link
 	}
 	// Select enemy
 	if IsKeyTriggered(ebiten.KeyE) {
@@ -86,21 +73,13 @@ func (g *Game) state_handler() {
 	// Show some debug info
 	if IsKeyTriggered(ebiten.KeyG) {
 		go click_sound()
-		if g.config.debug == true {
-			g.config.debug = false
-		} else {
-			g.config.debug = true
-		}
+		g.config.debug = !g.config.debug
 	}
 	// Toogle inventory
 	if IsKeyTriggered(ebiten.KeyI) {
 		go click_sound()
 		header_posx = 0
-		if g.config.showInventory == true {
-			g.config.showInventory = false
-		} else {
-			g.config.showInventory = true
-		}
+		g.config.showInventory = !g.config.showInventory
 	}
 	// Quit
 	if IsKeyTriggered(ebiten.KeyK) {
@@ -109,7 +88,7 @@ func (g *Game) state_handler() {
 
 	// Hidden area on the map
 	if IsKeyTriggered(ebiten.KeyH) {
-		g.config.hidden = false
+		g.config.hidden = !g.config.hidden
 	}
 	// Kill enemy (temporary)
 	if IsKeyTriggered(ebiten.KeyKP1) {
