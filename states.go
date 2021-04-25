@@ -8,98 +8,98 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-func state_handler() {
+func (g *Game) state_handler() {
 	// Move selected player
 	if IsKeyTriggered(ebiten.KeyW) {
-		player[STATE_PLAYER_SELECTED-1].posy -= 70
+		player[g.state.playerSelected-1].posy -= 70
 	}
 	if IsKeyTriggered(ebiten.KeyS) {
-		player[STATE_PLAYER_SELECTED-1].posy += 70
+		player[g.state.playerSelected-1].posy += 70
 	}
 	if IsKeyTriggered(ebiten.KeyA) {
-		player[STATE_PLAYER_SELECTED-1].posx -= 70
+		player[g.state.playerSelected-1].posx -= 70
 	}
 	if IsKeyTriggered(ebiten.KeyD) {
-		player[STATE_PLAYER_SELECTED-1].posx += 70
+		player[g.state.playerSelected-1].posx += 70
 	}
 	// Move selected enemy
 	if IsKeyTriggered(ebiten.KeyUp) {
-		npc[STATE_ENEMY_SELECTED-1].posy -= 70
+		npc[g.state.enemySelected-1].posy -= 70
 	}
 	if IsKeyTriggered(ebiten.KeyDown) {
-		npc[STATE_ENEMY_SELECTED-1].posy += 70
+		npc[g.state.enemySelected-1].posy += 70
 	}
 	if IsKeyTriggered(ebiten.KeyLeft) {
-		npc[STATE_ENEMY_SELECTED-1].posx -= 70
+		npc[g.state.enemySelected-1].posx -= 70
 	}
 	if IsKeyTriggered(ebiten.KeyRight) {
-		npc[STATE_ENEMY_SELECTED-1].posx += 70
+		npc[g.state.enemySelected-1].posx += 70
 	}
 	// Toogle fullscreen
 	if IsKeyTriggered(ebiten.KeyF) {
-		if STATE_FULLSCREEN == 0 {
+		if g.config.fullscreen == false {
 			ebiten.SetFullscreen(true)
-			STATE_FULLSCREEN = 1
+			g.config.fullscreen = true
 		} else {
 			ebiten.SetFullscreen(false)
-			STATE_FULLSCREEN = 0
+			g.config.fullscreen = false
 		}
 	}
 	// Player choice
 	if IsKeyTriggered(ebiten.KeyP) {
-		STATE_SHOW_SPLASH = 0
+		g.config.splash = false
 		header_posx = 0
 		go click_sound()
-		if STATE_PLAYER_SELECTED < 2 {
-			STATE_PLAYER_SELECTED += 1
+		if g.state.playerSelected < 2 {
+			g.state.playerSelected += 1
 		} else {
-			STATE_PLAYER_SELECTED = 1
+			g.state.playerSelected = 1
 		}
 	}
 	// DM screen
 	if IsKeyTriggered(ebiten.KeyU) {
 		go click_sound()
-		if STATE_DM == 1 {
-			STATE_DM = 0
+		if g.config.dm == true {
+			g.config.dm = false
 		} else {
-			STATE_DM = 1
+			g.config.dm = true
 		}
 	}
 	// Link/Measure
 	if IsKeyTriggered(ebiten.KeyL) {
 		go click_sound()
-		if STATE_LINK == 1 {
-			STATE_LINK = 0
+		if g.config.link == true {
+			g.config.link = false
 		} else {
-			STATE_LINK = 1
+			g.config.link = true
 		}
 	}
 	// Select enemy
 	if IsKeyTriggered(ebiten.KeyE) {
 		go click_sound()
-		if STATE_ENEMY_SELECTED < 4 {
-			STATE_ENEMY_SELECTED += 1
+		if g.state.enemySelected < 4 {
+			g.state.enemySelected += 1
 		} else {
-			STATE_ENEMY_SELECTED = 1
+			g.state.enemySelected = 1
 		}
 	}
 	// Show some debug info
 	if IsKeyTriggered(ebiten.KeyG) {
 		go click_sound()
-		if STATE_SHOW_DEBUG == 1 {
-			STATE_SHOW_DEBUG = 0
+		if g.config.debug == true {
+			g.config.debug = false
 		} else {
-			STATE_SHOW_DEBUG = 1
+			g.config.debug = true
 		}
 	}
 	// Toogle inventory
 	if IsKeyTriggered(ebiten.KeyI) {
 		go click_sound()
 		header_posx = 0
-		if STATE_SHOW_INVENTORY == 1 {
-			STATE_SHOW_INVENTORY = 0
+		if g.config.showInventory == true {
+			g.config.showInventory = false
 		} else {
-			STATE_SHOW_INVENTORY = 1
+			g.config.showInventory = true
 		}
 	}
 	// Quit
@@ -109,38 +109,38 @@ func state_handler() {
 
 	// Hidden area on the map
 	if IsKeyTriggered(ebiten.KeyH) {
-		STATE_HIDDEN = 0
+		g.config.hidden = false
 	}
 	// Kill enemy (temporary)
 	if IsKeyTriggered(ebiten.KeyKP1) {
-		npc[0].alive = 0
-		STATE_LINK = 0
+		npc[0].alive = false
+		g.config.link = false
 	}
 	if IsKeyTriggered(ebiten.KeyKP2) {
-		npc[1].alive = 0
-		STATE_LINK = 0
+		npc[1].alive = false
+		g.config.link = false
 	}
 	if IsKeyTriggered(ebiten.KeyKP3) {
-		npc[2].alive = 0
-		STATE_LINK = 0
+		npc[2].alive = false
+		g.config.link = false
 	}
 	if IsKeyTriggered(ebiten.KeyKP4) {
-		npc[3].alive = 0
-		STATE_LINK = 0
+		npc[3].alive = false
+		g.config.link = false
 	}
 	// Remove health from enemies WIP
 	/*if IsKeyTriggered(ebiten.KeyMinus) {
-	  npc[STATE_ENEMY_SELECTED].hp_max = strconv(npc[STATE_ENEMY_SELECTED].hp_max) -= 1
+	  npc[g.state.enemySelected].hp_max = strconv(npc[g.state.enemySelected].hp_max) -= true
 	} */
 
 	// Change game round
 	if IsKeyTriggered(ebiten.KeyN) {
 		notification_posx = 1920
 		go click_sound()
-		if STATE_ROUND < 2 {
-			STATE_ROUND += 1
+		if g.state.round < 2 {
+			g.state.round += 1
 		} else {
-			STATE_ROUND = 0
+			g.state.round = 0
 		}
 	}
 	// Dices be rollin'
