@@ -57,29 +57,29 @@ var (
 	//go:embed images
 	assetFS embed.FS
 
-	MyConfig          adventurer // TEST
-	player            [2]adventurer
-	npc               [4]enemy
-	DICE_20_1         int = 20
-	DICE_4_1          int = 4
-	DICE_6_1          int = 6
-	DICE_8_1          int = 8
-	keyStates             = map[ebiten.Key]int{}
-	cmd_run           []byte
-	engine_version            = "Mirkwood Engine 0.7.0 (Prototype)"
-	engine_text               = "Written in Go + Ebiten // Not all those who wander are lost"
-	header_posx       float64 = 0
-	notification_posx float64 = 1920
+	MyConfig       adventurer // TEST
+	player         [2]adventurer
+	npc            [4]enemy
+	DICE_20_1      int = 20
+	DICE_4_1       int = 4
+	DICE_6_1       int = 6
+	DICE_8_1       int = 8
+	keyStates          = map[ebiten.Key]int{}
+	cmd_run        []byte
+	engine_version = "Mirkwood Engine 0.7.0 (Prototype)"
+	engine_text    = "Written in Go + Ebiten // Not all those who wander are lost"
 )
 
 type config struct {
-	fullscreen    bool
-	hidden        bool
-	showInventory bool
-	link          bool
-	dm            bool
-	debug         bool
-	splash        bool
+	fullscreen        bool
+	hidden            bool
+	showInventory     bool
+	link              bool
+	dm                bool
+	debug             bool
+	splash            bool
+	header_posx       float64
+	notification_posx float64
 }
 
 type state struct {
@@ -90,13 +90,15 @@ type state struct {
 
 func newConfig() config {
 	return config{
-		fullscreen:    true,
-		hidden:        true,
-		showInventory: true,
-		dm:            false,
-		debug:         false,
-		link:          false,
-		splash:        true,
+		fullscreen:        true,
+		hidden:            true,
+		showInventory:     true,
+		dm:                false,
+		debug:             false,
+		link:              false,
+		splash:            true,
+		header_posx:       0,
+		notification_posx: 1920,
 	}
 }
 
@@ -141,14 +143,14 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	opEnemy2.GeoM.Translate(npc[1].posx, npc[1].posy)
 	opEnemy3.GeoM.Translate(npc[2].posx, npc[2].posy)
 	opEnemy4.GeoM.Translate(npc[3].posx, npc[3].posy)
-	opHeader.GeoM.Translate(header_posx, 32)
-	opInventory.GeoM.Translate(header_posx, 220)
+	opHeader.GeoM.Translate(g.config.header_posx, 32)
+	opInventory.GeoM.Translate(g.config.header_posx, 220)
 	opDice20.GeoM.Translate(16, 120)
 	opDice4.GeoM.Translate(16, 230)
 	opDice6.GeoM.Translate(16, 340)
 	opDice8.GeoM.Translate(16, 450)
 	opHide.GeoM.Translate(1041, 629)
-	opNotification.GeoM.Translate(notification_posx, 16)
+	opNotification.GeoM.Translate(g.config.notification_posx, 16)
 
 	// Draw images
 	if g.config.splash { // This shows the splashscreen
@@ -160,8 +162,8 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	} else {
 		// Map background handler
 		screen.DrawImage(g.assets.images.background1Image, opBackground)
-		if notification_posx > 32 {
-			notification_posx -= 128
+		if g.config.notification_posx > 32 {
+			g.config.notification_posx -= 128
 		}
 		screen.DrawImage(g.assets.images.notificationImage, opNotification)
 
@@ -226,8 +228,8 @@ func (g *Game) Draw(screen *ebiten.Image) {
 		// INVENTORY CARD
 		if g.config.showInventory {
 			// Show header animation
-			if header_posx < 1450 {
-				header_posx += 290
+			if g.config.header_posx < 1450 {
+				g.config.header_posx += 290
 			}
 			// Show player header image
 			if g.state.playerSelected == 1 {

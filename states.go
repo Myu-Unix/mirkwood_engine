@@ -43,7 +43,7 @@ func (g *Game) state_handler() {
 	// Player choice
 	if IsKeyTriggered(ebiten.KeyP) {
 		g.config.splash = false
-		header_posx = 0
+		g.config.header_posx = 0
 		go click_sound()
 		if g.state.playerSelected < 2 {
 			g.state.playerSelected += 1
@@ -78,7 +78,7 @@ func (g *Game) state_handler() {
 	// Toogle inventory
 	if IsKeyTriggered(ebiten.KeyI) {
 		go click_sound()
-		header_posx = 0
+		g.config.header_posx = 0
 		g.config.showInventory = !g.config.showInventory
 	}
 	// Quit
@@ -114,7 +114,7 @@ func (g *Game) state_handler() {
 
 	// Change game round
 	if IsKeyTriggered(ebiten.KeyN) {
-		notification_posx = 1920
+		g.config.notification_posx = 1920
 		go click_sound()
 		if g.state.round < 2 {
 			g.state.round += 1
@@ -146,7 +146,7 @@ func (g *Game) state_handler() {
 	// Next map - Disabled
 	/*if IsKeyTriggered(ebiten.KeyN) {
 	  go click_sound()
-	  header_posx = 0
+	  g.config.header_posx = 0
 	  STATE_MAP=2
 	  npc[0].alive=1
 	  npc[1].alive=1
