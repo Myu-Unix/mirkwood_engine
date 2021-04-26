@@ -4,42 +4,43 @@ import (
 	"os"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
 func (g *Game) handleState() {
 	// Move selected player
-	if IsKeyTriggered(ebiten.KeyW) {
+	if inpututil.IsKeyJustPressed(ebiten.KeyW) {
 		player[g.state.playerSelected-1].posy -= 70
 	}
-	if IsKeyTriggered(ebiten.KeyS) {
+	if inpututil.IsKeyJustPressed(ebiten.KeyS) {
 		player[g.state.playerSelected-1].posy += 70
 	}
-	if IsKeyTriggered(ebiten.KeyA) {
+	if inpututil.IsKeyJustPressed(ebiten.KeyA) {
 		player[g.state.playerSelected-1].posx -= 70
 	}
-	if IsKeyTriggered(ebiten.KeyD) {
+	if inpututil.IsKeyJustPressed(ebiten.KeyD) {
 		player[g.state.playerSelected-1].posx += 70
 	}
 	// Move selected enemy
-	if IsKeyTriggered(ebiten.KeyUp) {
+	if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
 		npc[g.state.enemySelected-1].posy -= 70
 	}
-	if IsKeyTriggered(ebiten.KeyDown) {
+	if inpututil.IsKeyJustPressed(ebiten.KeyDown) {
 		npc[g.state.enemySelected-1].posy += 70
 	}
-	if IsKeyTriggered(ebiten.KeyLeft) {
+	if inpututil.IsKeyJustPressed(ebiten.KeyLeft) {
 		npc[g.state.enemySelected-1].posx -= 70
 	}
-	if IsKeyTriggered(ebiten.KeyRight) {
+	if inpututil.IsKeyJustPressed(ebiten.KeyRight) {
 		npc[g.state.enemySelected-1].posx += 70
 	}
 	// Toogle fullscreen
-	if IsKeyTriggered(ebiten.KeyF) {
+	if inpututil.IsKeyJustPressed(ebiten.KeyF) {
 		g.config.fullscreen = !g.config.fullscreen
 		ebiten.SetFullscreen(g.config.fullscreen)
 	}
 	// Player choice
-	if IsKeyTriggered(ebiten.KeyP) {
+	if inpututil.IsKeyJustPressed(ebiten.KeyP) {
 		g.config.splash = false
 		g.config.header_posx = 0
 		go click_sound()
@@ -50,17 +51,17 @@ func (g *Game) handleState() {
 		}
 	}
 	// DM screen
-	if IsKeyTriggered(ebiten.KeyU) {
+	if inpututil.IsKeyJustPressed(ebiten.KeyU) {
 		go click_sound()
 		g.config.dm = !g.config.dm
 	}
 	// Link/Measure
-	if IsKeyTriggered(ebiten.KeyL) {
+	if inpututil.IsKeyJustPressed(ebiten.KeyL) {
 		go click_sound()
 		g.config.link = !g.config.link
 	}
 	// Select enemy
-	if IsKeyTriggered(ebiten.KeyE) {
+	if inpututil.IsKeyJustPressed(ebiten.KeyE) {
 		go click_sound()
 		if g.state.enemySelected < 4 {
 			g.state.enemySelected += 1
@@ -69,49 +70,49 @@ func (g *Game) handleState() {
 		}
 	}
 	// Show some debug info
-	if IsKeyTriggered(ebiten.KeyG) {
+	if inpututil.IsKeyJustPressed(ebiten.KeyG) {
 		go click_sound()
 		g.config.debug = !g.config.debug
 	}
 	// Toogle inventory
-	if IsKeyTriggered(ebiten.KeyI) {
+	if inpututil.IsKeyJustPressed(ebiten.KeyI) {
 		go click_sound()
 		g.config.header_posx = 0
 		g.config.showInventory = !g.config.showInventory
 	}
 	// Quit
-	if IsKeyTriggered(ebiten.KeyK) {
+	if inpututil.IsKeyJustPressed(ebiten.KeyK) {
 		os.Exit(0)
 	}
 
 	// Hidden area on the map
-	if IsKeyTriggered(ebiten.KeyH) {
+	if inpututil.IsKeyJustPressed(ebiten.KeyH) {
 		g.config.hidden = !g.config.hidden
 	}
 	// Kill enemy (temporary)
-	if IsKeyTriggered(ebiten.KeyKP1) {
+	if inpututil.IsKeyJustPressed(ebiten.KeyKP1) {
 		npc[0].alive = false
 		g.config.link = false
 	}
-	if IsKeyTriggered(ebiten.KeyKP2) {
+	if inpututil.IsKeyJustPressed(ebiten.KeyKP2) {
 		npc[1].alive = false
 		g.config.link = false
 	}
-	if IsKeyTriggered(ebiten.KeyKP3) {
+	if inpututil.IsKeyJustPressed(ebiten.KeyKP3) {
 		npc[2].alive = false
 		g.config.link = false
 	}
-	if IsKeyTriggered(ebiten.KeyKP4) {
+	if inpututil.IsKeyJustPressed(ebiten.KeyKP4) {
 		npc[3].alive = false
 		g.config.link = false
 	}
 	// Remove health from enemies WIP
-	/*if IsKeyTriggered(ebiten.KeyMinus) {
+	/*if inpututil.IsKeyJustPressed(ebiten.KeyMinus) {
 	  npc[g.state.enemySelected].hp_max = strconv(npc[g.state.enemySelected].hp_max) -= true
 	} */
 
 	// Change game round
-	if IsKeyTriggered(ebiten.KeyN) {
+	if inpututil.IsKeyJustPressed(ebiten.KeyN) {
 		g.config.notification_posx = 1920
 		go click_sound()
 		if g.state.round < 2 {
@@ -121,7 +122,7 @@ func (g *Game) handleState() {
 		}
 	}
 	// Dices be rollin'
-	if IsKeyTriggered(ebiten.KeyR) { // roll dices
+	if inpututil.IsKeyJustPressed(ebiten.KeyR) { // roll dices
 		go dice_sound()
 		g.state.d20 = g.config.rand.Intn(20) + 1
 		g.state.d4 = g.config.rand.Intn(4) + 1
@@ -130,7 +131,7 @@ func (g *Game) handleState() {
 	}
 
 	// Next map - Disabled
-	/*if IsKeyTriggered(ebiten.KeyN) {
+	/*if inpututil.IsKeyJustPressed(ebiten.KeyN) {
 	  go click_sound()
 	  g.config.header_posx = 0
 	  STATE_MAP=2
