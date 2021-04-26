@@ -62,11 +62,7 @@ var (
 	MyConfig       adventurer // TEST
 	player         [2]adventurer
 	npc            [4]enemy
-	DICE_20_1      int = 20
-	DICE_4_1       int = 4
-	DICE_6_1       int = 6
-	DICE_8_1       int = 8
-	keyStates          = map[ebiten.Key]int{}
+	keyStates      = map[ebiten.Key]int{}
 	cmd_run        []byte
 	engine_version = "Mirkwood Engine 0.7.0 (Prototype)"
 	engine_text    = "Written in Go + Ebiten // Not all those who wander are lost"
@@ -89,6 +85,10 @@ type state struct {
 	playerSelected int
 	enemySelected  int
 	round          int
+	d20            int
+	d4             int
+	d6             int
+	d8             int
 }
 
 func newConfig() config {
@@ -112,6 +112,10 @@ func newState() state {
 		playerSelected: 1,
 		enemySelected:  1,
 		round:          0,
+		d20:            20,
+		d4:             4,
+		d6:             6,
+		d8:             8,
 	}
 }
 
@@ -190,10 +194,10 @@ func (g *Game) Draw(screen *ebiten.Image) {
 		screen.DrawImage(g.assets.images.dice4Image, opDice4)
 		screen.DrawImage(g.assets.images.dice6Image, opDice6)
 		screen.DrawImage(g.assets.images.dice8Image, opDice8)
-		text.Draw(screen, string(strconv.Itoa(DICE_20_1)), g.assets.fonts.mplusNormalFont, 140, 200, color.White)
-		text.Draw(screen, string(strconv.Itoa(DICE_4_1)), g.assets.fonts.mplusNormalFont, 140, 300, color.White)
-		text.Draw(screen, string(strconv.Itoa(DICE_6_1)), g.assets.fonts.mplusNormalFont, 140, 400, color.White)
-		text.Draw(screen, string(strconv.Itoa(DICE_8_1)), g.assets.fonts.mplusNormalFont, 140, 500, color.White)
+		text.Draw(screen, string(strconv.Itoa(g.state.d20)), g.assets.fonts.mplusNormalFont, 140, 200, color.White)
+		text.Draw(screen, string(strconv.Itoa(g.state.d4)), g.assets.fonts.mplusNormalFont, 140, 300, color.White)
+		text.Draw(screen, string(strconv.Itoa(g.state.d6)), g.assets.fonts.mplusNormalFont, 140, 400, color.White)
+		text.Draw(screen, string(strconv.Itoa(g.state.d8)), g.assets.fonts.mplusNormalFont, 140, 500, color.White)
 		// Drawing adventurers/players
 		screen.DrawImage(g.assets.images.adventurer1Image, opAdventurer1)
 		screen.DrawImage(g.assets.images.adventurer2Image, opAdventurer2)

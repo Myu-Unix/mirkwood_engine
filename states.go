@@ -123,10 +123,10 @@ func (g *Game) state_handler() {
 	// Dices be rollin'
 	if IsKeyTriggered(ebiten.KeyR) { // roll dices
 		go dice_sound()
-		DICE_20_1 = g.config.rand.Intn(20) + 1
-		DICE_4_1 = g.config.rand.Intn(4) + 1
-		DICE_6_1 = g.config.rand.Intn(6) + 1
-		DICE_8_1 = g.config.rand.Intn(8) + 1
+		g.state.d20 = g.config.rand.Intn(20) + 1
+		g.state.d4 = g.config.rand.Intn(4) + 1
+		g.state.d6 = g.config.rand.Intn(6) + 1
+		g.state.d8 = g.config.rand.Intn(8) + 1
 	}
 
 	// Next map - Disabled
