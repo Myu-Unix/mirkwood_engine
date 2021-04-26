@@ -9,7 +9,9 @@ import (
 	"image/color"
 	"log"
 	"math"
+	"math/rand"
 	"strconv"
+	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -80,6 +82,7 @@ type config struct {
 	splash            bool
 	header_posx       float64
 	notification_posx float64
+	rand              *rand.Rand
 }
 
 type state struct {
@@ -89,6 +92,7 @@ type state struct {
 }
 
 func newConfig() config {
+	randSrc := rand.NewSource(time.Now().UnixNano())
 	return config{
 		fullscreen:        true,
 		hidden:            true,
@@ -99,6 +103,7 @@ func newConfig() config {
 		splash:            true,
 		header_posx:       0,
 		notification_posx: 1920,
+		rand:              rand.New(randSrc),
 	}
 }
 

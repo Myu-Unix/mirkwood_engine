@@ -1,9 +1,7 @@
 package main
 
 import (
-	"math/rand"
 	"os"
-	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -125,22 +123,10 @@ func (g *Game) state_handler() {
 	// Dices be rollin'
 	if IsKeyTriggered(ebiten.KeyR) { // roll dices
 		go dice_sound()
-		time.Sleep(80 * time.Millisecond)
-		s1 := rand.NewSource(time.Now().UnixNano())
-		r1 := rand.New(s1)
-		time.Sleep(80 * time.Millisecond)
-		s2 := rand.NewSource(time.Now().UnixNano())
-		r2 := rand.New(s2)
-		time.Sleep(80 * time.Millisecond)
-		s3 := rand.NewSource(time.Now().UnixNano())
-		r3 := rand.New(s3)
-		time.Sleep(80 * time.Millisecond)
-		s4 := rand.NewSource(time.Now().UnixNano())
-		r4 := rand.New(s4)
-		DICE_20_1 = r1.Intn(20) + 1
-		DICE_4_1 = r2.Intn(4) + 1
-		DICE_6_1 = r3.Intn(6) + 1
-		DICE_8_1 = r4.Intn(8) + 1
+		DICE_20_1 = g.config.rand.Intn(20) + 1
+		DICE_4_1 = g.config.rand.Intn(4) + 1
+		DICE_6_1 = g.config.rand.Intn(6) + 1
+		DICE_8_1 = g.config.rand.Intn(8) + 1
 	}
 
 	// Next map - Disabled
