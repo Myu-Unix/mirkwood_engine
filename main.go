@@ -319,10 +319,10 @@ func (g *Game) Draw(screen *ebiten.Image) {
 
 func (g *Game) Update() error {
 	// Handle single keypress with Ebiten
-	keyboard_handler()
+	handleKeyboard()
 
 	// Handle keypress and set states
-	g.state_handler()
+	g.handleState()
 
 	return nil
 }

@@ -4,7 +4,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-func keyboard_handler() {
+func handleKeyboard() {
 	keys := []ebiten.Key{
 		ebiten.KeyW,
 		ebiten.KeyS,

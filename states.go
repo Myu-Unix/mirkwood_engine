@@ -6,7 +6,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-func (g *Game) state_handler() {
+func (g *Game) handleState() {
 	// Move selected player
 	if IsKeyTriggered(ebiten.KeyW) {
 		player[g.state.playerSelected-1].posy -= 70
